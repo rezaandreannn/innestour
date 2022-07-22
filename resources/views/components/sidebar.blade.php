@@ -14,7 +14,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Menu</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="active" href="layout-transparent.html">MOU</a></li>
+                    <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li>
                     <li><a class="nav-link" href="layout-top-navigation.html">Comments</a></li>
                 </ul>
             </li>

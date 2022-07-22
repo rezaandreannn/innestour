@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\MouController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,9 @@ Route::get('/dashboard', function () {
 
 Route::Resource('role', 'App\Http\Controllers\RoleController');
 Route::Resource('user', 'App\Http\Controllers\UserController');
-// Route::resource('ticket', 'App\Http\Controllers\TicketController');
+route::get('mou/approve/{id}/edit', [MouController::class, 'accForm'])->name('mou.approve.form');
+route::patch('mou/approve', [MouController::class, 'approve'])->name('mou.approve');
+Route::resource('mou', 'App\Http\Controllers\MouController');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/profile/update', [ProfileController::class, 'edit'])->name('profile.edit');
