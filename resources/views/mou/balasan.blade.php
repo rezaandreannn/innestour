@@ -12,18 +12,22 @@
                 <div class="col-12 col-sm-12 col-lg-8">
                     <div class="card">
                         <div class="card-header">
-                            <h4>User : {{ $mou->nama_perusahaan }}</h4>
+                            <h4>Nama Perusahaan : {{ $balasan->nama_perusahaan }}</h4>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
                                 <li class="media">
-                                    <img alt="image" class="mr-3 rounded-circle" width="70"
-                                        src="{{  asset('storage/' . $mou->logo) }}">
+                                    {{-- <img alt="image" class="mr-3 rounded-circle" width="70"
+                                    src="{{  asset('storage/' . $mou->logo) }}"> --}}
                                     <div class="media-body">
                                         <div class="media-right">
-                                            <div class="text-primary">Aktif</div>
+                                            <div class="text-primary">{{ $balasan->status }}</div>
                                         </div>
-                                        <div class="media-title mb-1">{!! $mou->balasans[0]->deskripsi !!}</div>
+                                        <div class="media-title mb-1">{!! $balasan->deskripsi !!}</div>
+                                        <div class="media-title mb-1">
+                                            <iframe src="{{ asset('storage/'. $balasan->dokumen) }}" frameborder="0"></iframe>
+                                            <a class="d-block text-primary" target="blink" href=" {{ asset('storage/'. $balasan->dokumen) }} ">Download</a>
+                                        </div>
                                         {{-- <div class="text-time">Di buat, {{ $user->created_at->format('d M Y') }}</div>
                                         <div class="text-time">di edit, {{ $user->updated_at->format('d M Y') }}</div>
                                         <div class="media-description text-muted">{{ $user->email }}</div>

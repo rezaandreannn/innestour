@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Mou;
 use App\Models\User;
 use App\Models\Balasan;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class MouController extends Controller
@@ -163,16 +165,6 @@ class MouController extends Controller
             'status' => 'approve'
         ]);
 
-        // foreach (Mou::all() as $key) {
-        //     if ($key->status == 'approve') {
-        //         return redirect()->route('mou.index')->with('failed', 'anda sudah melakukan acc pada perusahaan ' . $nama . ' ');
-        //     } else {
-        //         Mou::where('id', $id)->update([
-        //             'status' => 'approve'
-        //         ]);
-        //     }
-        // }
-
         return redirect()->route('mou.index')->with('success', 'Berhasil malakukan acc pada perusahan   ' . $nama . ' ');
     }
 
@@ -184,12 +176,21 @@ class MouController extends Controller
             'Detail Balasan' => route('mou.balasan')
         ];
 
-        $mou = Mou::with(['user', 'balasans'])->where('user_id', Auth::user()->id)->first();
+       $balasan = DB::table('balasans')
+            ->join('mous', 'mous.id', '=', 'balasans.mou_id')
+            ->join('users', 'users.id', '=', 'balasans.user_id')
+            ->where('mous.user_id', '=', Auth::user()->id)
+            ->first();
 
-        if ($mou->status == 'pending') {
+
+        // $mou = Mou::with(['user', 'balasans'])->where('user_id', Auth::user()->id)->first();
+
+        // $balasan = new Collection($collection);
+        // dd($balasan);
+        if (!$balasan) {
             return redirect()->route('mou.index')->with('message', 'Maaf😓. Permintaan anda belum di acc oleh admin, tunggu beberapa saat ');
         }
 
-        return view('mou.balasan', compact('breadcrumbs', 'mou'));
+        return view('mou.balasan', compact('breadcrumbs', 'balasan'));
     }
 }
