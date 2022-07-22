@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Balasan;
 use App\Models\Mou;
+use App\Models\User;
+use App\Models\Balasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -173,5 +174,22 @@ class MouController extends Controller
         // }
 
         return redirect()->route('mou.index')->with('success', 'Berhasil malakukan acc pada perusahan   ' . $nama . ' ');
+    }
+
+    public function balasan(){
+        
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard'),
+            'MOU' => route('mou.index'),
+            'Detail Balasan' => route('mou.balasan')
+        ];
+
+        $mou = Mou::with(['user', 'balasans'])->where('user_id', Auth::user()->id)->first();
+
+        if ($mou->status == 'pending') {
+            return redirect()->route('mou.index')->with('message', 'Maaf😓. Permintaan anda belum di acc oleh admin, tunggu beberapa saat ');
+        }
+
+        return view('mou.balasan', compact('breadcrumbs', 'mou'));
     }
 }

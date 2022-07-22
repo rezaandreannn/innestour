@@ -15,10 +15,11 @@ class Balasan extends Model
 
     public function user()
     {
-        return  $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
-    public function mous()
+
+    public function mou()
     {
-        return  $this->hasMany(Mou::class);
+        return $this->belongsTo(Mou::class);
     }
 }

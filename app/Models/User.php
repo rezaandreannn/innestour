@@ -51,6 +51,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Mou::class);
     }
+
     public function balasans()
     {
         return $this->hasMany(Balasan::class);

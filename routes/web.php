@@ -28,6 +28,9 @@ Route::middleware('auth', 'ceklogin:admin')->group(function () {
     Route::Resource('user', 'App\Http\Controllers\UserController');
 });
 
+Route::middleware('auth', 'ceklogin:user')->group(function () {
+   Route::get('mou/balasan',[MouController::class, 'balasan'])->name('mou.balasan');
+});
 route::get('mou/approve/{id}/edit', [MouController::class, 'accForm'])->name('mou.approve.form');
 route::patch('mou/approve', [MouController::class, 'approve'])->name('mou.approve');
 Route::resource('mou', 'App\Http\Controllers\MouController');

@@ -18,8 +18,8 @@ class Mou extends Model
         return  $this->belongsTo(User::class);
     }
 
-    public function balasan()
+    public function balasans()
     {
-        return  $this->belongsTo(Balasan::class);
+        return $this->hasMany(Balasan::class);
     }
 }

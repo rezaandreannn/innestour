@@ -30,7 +30,18 @@
                         <li><a class="active" href="{{ route('mou.create') }}">Tambahkan Mou</a></li> 
                             {{-- <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li> --}}
                             <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li>
-                        <li><a class="nav-link" href="layout-top-navigation.html">Comments</a></li>
+                        <li><a class="nav-link" href="{{ route('mou.balasan') }}">Balasan</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-columns"></i>
+                        <span>Paket Wisata</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="active" href="">pesanan</a></li> 
+                            {{-- <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li> --}}
+                            <li><a class="active" href="">Negosiasi</a></li>
+                        {{-- <li><a class="nav-link" href="layout-top-navigation.html"></a></li> --}}
                     </ul>
                 </li>
             @endif
