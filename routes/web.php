@@ -23,6 +23,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::Resource('role', 'App\Http\Controllers\RoleController');
+Route::Resource('user', 'App\Http\Controllers\UserController');
 // Route::resource('ticket', 'App\Http\Controllers\TicketController');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');

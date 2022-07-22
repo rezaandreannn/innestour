@@ -19,7 +19,7 @@ class RoleController extends Controller
             'Role' => route('role.index')
         ];
 
-        $theads = ['No', 'Nama', 'Deskripsi', 'Dibuat', 'Action'];
+        $theads = ['No', 'Nama', 'Deskripsi', 'Dibuat', 'Aksi'];
 
         $roles = Role::all();
 

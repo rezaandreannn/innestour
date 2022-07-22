@@ -1,6 +1,6 @@
-<x-app-layout title="Role">
+<x-app-layout title="User">
     <section class="section">
-        <x-breadcrumb title="Role">
+        <x-breadcrumb title="User">
             @foreach ($breadcrumbs as $breadcrumb => $url)
                 <div class="breadcrumb-item"><a class="text-decoration-none"
                         href="{{ $url }}">{{ $breadcrumb }}</a></div>
@@ -8,7 +8,7 @@
         </x-breadcrumb>
 
         @if (session('message'))
-            <div class="alert alert-info text-center" role="alert">
+            <div class="alert alert-primary text-center" role="alert">
                 <span>
                     {{ session('message') }}
                 </span>
@@ -19,7 +19,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('role.create') }}" class="btn btn-primary">Tambah Role</a>
+                            <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah User</a>
                             <h4></h4>
                             <div class="card-header-form">
                                 <form>
@@ -40,15 +40,18 @@
                                             <th>{{ $thead }}</th>
                                         @endforeach
                                     </tr>
-                                    @forelse ($roles as $role)
+                                    @forelse ($users as $user)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $role->name }}</td>
-                                            <td>{{ $role->deskripsi }}</td>
-                                            <td>{{ $role->updated_at->format('d, M Y') }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td><span class="badge badge-success">{{ $user->role->name }}</span></td>
+                                            <td>{{ $user->updated_at->format('d, M Y') }}</td>
                                             <td>
-                                                <x-action href="{{ route('role.edit', $role->id) }}"
-                                                    action="{{ route('role.destroy', $role->id) }}" />
+                                                <a href="{{ route('user.show', $user->id) }}"
+                                                    class="btn btn-info btn-sm">Info</a>
+                                                <x-action href="{{ route('user.edit', $user->id) }}"
+                                                    action="{{ route('user.destroy', $user->id) }}" />
                                             </td>
                                         @empty
                                             <td colspan="6" class="mt-4">
