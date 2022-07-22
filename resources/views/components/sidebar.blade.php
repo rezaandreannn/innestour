@@ -24,7 +24,7 @@
                     <span>Setting</span></a>
                 <ul class="dropdown-menu">
                     <li><a href="auth-forgot-password.html">User</a></li>
-                    <li><a href="auth-forgot-password.html">role</a></li>
+                    <li><a href="{{ route('role.index') }}">Role</a></li>
 
                 </ul>
             </li>

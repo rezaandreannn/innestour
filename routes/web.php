@@ -22,8 +22,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('category', 'App\Http\Controllers\CategoryController');
-Route::resource('ticket', 'App\Http\Controllers\TicketController');
+Route::Resource('role', 'App\Http\Controllers\RoleController');
+// Route::resource('ticket', 'App\Http\Controllers\TicketController');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/profile/update', [ProfileController::class, 'edit'])->name('profile.edit');

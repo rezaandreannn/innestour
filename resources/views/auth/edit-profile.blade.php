@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Edit Profile">
     @push('css')
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/summernote/dist/summernote-bs4.css') }}">
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/codemirror/lib/codemirror.css') }}">
@@ -6,14 +6,12 @@
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/selectric/public/selectric.css') }}">
     @endpush
     <section class="section">
-        <div class="section-header">
-            <h1>Ubah Profile</h1>
-            <div class="section-header-breadcrumb">
-                {{-- @foreach ($breadcrumb as $key => $url)
-                    <div class="breadcrumb-item"><a href="{{ $url }}">{{ $key }}</a></div>
-                @endforeach --}}
-            </div>
-        </div>
+        <x-breadcrumb title="Profile">
+            @foreach ($breadcrumbs as $breadcrumb => $url)
+                <div class="breadcrumb-item"><a class="text-decoration-none"
+                        href="{{ $url }}">{{ $breadcrumb }}</a></div>
+            @endforeach
+        </x-breadcrumb>
 
 
         <div class="row">

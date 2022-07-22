@@ -1,17 +1,12 @@
-<x-app-layout>
+<x-app-layout title="Profile">
     <section class="section">
-        <div class="section-header">
-            <h1>Profile</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item">Profile</div>
-            </div>
-        </div>
+        <x-breadcrumb title="Profile">
+            @foreach ($breadcrumbs as $breadcrumb => $url)
+                <div class="breadcrumb-item"><a class="text-decoration-none"
+                        href="{{ $url }}">{{ $breadcrumb }}</a></div>
+            @endforeach
+        </x-breadcrumb>
         <div class="section-body">
-            {{-- <h2 class="section-title">Hi, {{ strtoupper(Auth::user()->name) }}</h2>
-            <p class="section-lead">
-                Profile anda.
-            </p> --}}
             <div class="row mt-sm-4">
                 <div class="col-12 col-md-12 col-lg-5">
                     <div class="card profile-widget">
@@ -40,11 +35,8 @@
                                         @endif
                                     </div>
                                 </div>
-
                             </div>
-
                             <a href="{{ route('profile.edit') }}" class="btn btn-primary">Ubah Profile</a>
-
                         </div>
                     </div>
                 </div>

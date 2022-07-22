@@ -12,7 +12,12 @@ class ProfileController extends Controller
 {
     public function show()
     {
-        return view('auth.profile');
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard'),
+            'Profile' => route('profile.show')
+        ];
+
+        return view('auth.profile', compact('breadcrumbs'));
     }
 
     public function ubahPassword(Request $request)
@@ -43,8 +48,12 @@ class ProfileController extends Controller
 
     public function edit()
     {
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard'),
+            'Edit Profile' => route('profile.edit')
+        ];
 
-        return view('auth.edit-profile');
+        return view('auth.edit-profile', compact('breadcrumbs'));
     }
 
     public function update(Request $request)
