@@ -46,6 +46,7 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td><span class="badge badge-success">{{ $user->role->name }}</span></td>
+                                            <td>{{ $user->created_at->format('d, M Y') }}</td>
                                             <td>{{ $user->updated_at->format('d, M Y') }}</td>
                                             <td>
                                                 <a href="{{ route('user.show', $user->id) }}"

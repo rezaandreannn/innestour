@@ -23,7 +23,7 @@
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i>
                     <span>Setting</span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="auth-forgot-password.html">User</a></li>
+                    <li><a href="{{ route('user.index') }}">User</a></li>
                     <li><a href="{{ route('role.index') }}">Role</a></li>
 
                 </ul>

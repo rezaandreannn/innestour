@@ -20,7 +20,7 @@ class Usercontroller extends Controller
             'User' => route('user.index')
         ];
 
-        $theads = ['No', 'Nama', 'Email', 'Role', 'Dibuat', 'Aksi'];
+        $theads = ['No', 'Nama', 'Email', 'Role', 'Di buat', 'Di edit', 'Aksi'];
 
         $users = User::with('role')->get();
 
@@ -59,6 +59,8 @@ class Usercontroller extends Controller
             'role_id' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
+
+        $data['password'] = bcrypt(request('password'));
 
         User::create($data);
 

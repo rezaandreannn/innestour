@@ -46,9 +46,18 @@
                                 <div class="col-sm-12 col-md-7">
                                     <x-select id="jenis_kelamin" class="" type="jenis_kelamin"
                                         name="jenis_kelamin" class="seletric">
-                                        <option>Pilih Jenis Kalamin</option>
-                                        <option value="laki-laki">Laki Laki</option>
-                                        <option value="perempuan">Perempuan</option>
+
+                                        @if (Auth::user()->jenis_kelamin == 'laki-laki')
+                                            <option value="laki-laki" selected>Laki Laki</option>
+                                            <option value="perempuan">Perempuan</option>
+                                        @elseif(Auth::user()->jenis_kelamin == 'perempuan')
+                                            <option value="perempuan" selected>Perempuan</option>
+                                            <option value="laki-laki">Laki Laki</option>
+                                        @else
+                                            <option>Pilih Jenis Kalamin</option>
+                                            <option value="laki-laki">Laki Laki</option>
+                                            <option value="perempuan">Perempuan</option>
+                                        @endif
                                     </x-select>
                                 </div>
                             </div>

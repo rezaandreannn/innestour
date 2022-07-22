@@ -24,7 +24,8 @@
                                             <div class="text-primary">Aktif</div>
                                         </div>
                                         <div class="media-title mb-1">{{ $user->name }}</div>
-                                        <div class="text-time">Dibuat, {{ $user->updated_at->format('d M Y') }}</div>
+                                        <div class="text-time">Di buat, {{ $user->created_at->format('d M Y') }}</div>
+                                        <div class="text-time">di edit, {{ $user->updated_at->format('d M Y') }}</div>
                                         <div class="media-description text-muted">{{ $user->email }}</div>
                                         <div class="media-description text-muted">
                                             {{ $user->no_hp ?? 'belum menambahkan no hp' }}</div>
