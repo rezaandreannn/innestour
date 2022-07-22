@@ -14,6 +14,13 @@
                 </span>
             </div>
         @endif
+        @if (session('message'))
+            <div class="alert alert-primary text-center" role="alert">
+                <span>
+                    {{ session('message') }}
+                </span>
+            </div>
+        @endif
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
@@ -71,7 +78,8 @@
                                                     action="{{ route('mou.destroy', $mou->id) }}" />
                                             </td>
                                         @empty
-                                            <td colspan="6" class="mt-4">
+
+                                            <td colspan="8" class="mt-4">
                                                 <div class="alert alert-warning text-center" role="alert">
                                                     <h5>
                                                         Tidak ada data .

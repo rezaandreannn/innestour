@@ -10,24 +10,43 @@
             <li class="menu-header">Dashboard</li>
             <li><a class="nav-link" href="/dashboard"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">Menu</li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                    <span>Menu</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li>
-                    <li><a class="nav-link" href="layout-top-navigation.html">Comments</a></li>
-                </ul>
-            </li>
-            <li class="menu-header">Setting</li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i>
-                    <span>Setting</span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('user.index') }}">User</a></li>
-                    <li><a href="{{ route('role.index') }}">Role</a></li>
+            @if (Auth::user()->role_id == 1)
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-columns"></i>
+                        <span>Menu</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li>
+                        <li><a class="nav-link" href="layout-top-navigation.html">Comments</a></li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 2)
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-columns"></i>
+                        <span>Ajukan MOU</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="active" href="{{ route('mou.create') }}">Tambahkan Mou</a></li> 
+                            {{-- <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li> --}}
+                            <li><a class="active" href="{{ route('mou.index') }}">MOU</a></li>
+                        <li><a class="nav-link" href="layout-top-navigation.html">Comments</a></li>
+                    </ul>
+                </li>
+            @endif
 
-                </ul>
-            </li>
+
+            @if (Auth::user()->role_id == 1)
+                <li class="menu-header">Setting</li>
+                <li class="nav-item dropdown">  
+                    <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i>
+                        <span>Setting</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('user.index') }}">User</a></li>
+                        <li><a href="{{ route('role.index') }}">Role</a></li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </aside>
 </div>

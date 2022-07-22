@@ -23,8 +23,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::Resource('role', 'App\Http\Controllers\RoleController');
-Route::Resource('user', 'App\Http\Controllers\UserController');
+Route::middleware('auth', 'ceklogin:admin')->group(function () {
+    Route::Resource('role', 'App\Http\Controllers\RoleController');
+    Route::Resource('user', 'App\Http\Controllers\UserController');
+});
+
 route::get('mou/approve/{id}/edit', [MouController::class, 'accForm'])->name('mou.approve.form');
 route::patch('mou/approve', [MouController::class, 'approve'])->name('mou.approve');
 Route::resource('mou', 'App\Http\Controllers\MouController');

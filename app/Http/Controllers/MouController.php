@@ -16,13 +16,21 @@ class MouController extends Controller
      */
     public function index()
     {
-        $mous = Mou::with('user')->get();
+        // cek role
+        if (Auth::user()->role_id == 1) {
+            $mous = Mou::with('user')->get();
+
+            $theads = ['No', 'Nama User', 'Logo', 'Nama Perusahaan', 'Dokumen', 'Di buat', 'Status', 'Aksi'];
+        } else {
+            $mous = Mou::with('user')->where('user_id', Auth::user()->id)->get();
+
+            $theads = ['No', 'Nama User', 'Logo', 'Nama Perusahaan', 'Dokumen', 'Di buat', 'Status', 'Aksi'];
+        }
         $breadcrumbs = [
             'Dashboard' => route('dashboard'),
             'MOU' => route('mou.index')
         ];
 
-        $theads = ['No', 'Nama User', 'Logo', 'Nama Perusahaan', 'Dokumen', 'Di buat', 'Status', 'Aksi'];
 
 
         return view('mou.index', compact('breadcrumbs', 'theads', 'mous'));
@@ -73,10 +81,9 @@ class MouController extends Controller
         foreach ($mou as $value) {
             if ($value->user_id == Auth::user()->id) {
                 return redirect()->route('mou.create')->with('message', 'Anda sudah melakukan kerjasama bersama kami. Terimakasih 👍');
-            } else {
-                Mou::create($data);
             }
         }
+        Mou::create($data);
 
 
         return redirect()->route('mou.index')->with('message', 'berhasil menambahkan data MOU');
