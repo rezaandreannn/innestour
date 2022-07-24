@@ -45,8 +45,9 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $paket->nama_paket }}</td>
                                             <td>{{ $paket->nama_program }}</td>
-
-                                            <td>{{ $paket->tempat_duduk }}</td>
+                                            <td><a href="{{ route('paket.show', $paket->id) }}"
+                                                    class="badge badge-success">Detail</a></td>
+                                            <td>{{ $paket->tempat_duduk }} Kursi</td>
                                             <td>@currency($paket->harga) </td>
                                             <td style="max-width: 200px">{{ $paket->fasilitas }}</td>
                                             <td>

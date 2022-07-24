@@ -1,4 +1,4 @@
-<x-app-layout title="Tambah Wisata">
+<x-app-layout title="Edit Wisata">
     @push('css')
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/summernote/dist/summernote-bs4.css') }}">
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/codemirror/lib/codemirror.css') }}">
@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/selectric/public/selectric.css') }}">
     @endpush
     <section class="section">
-        <x-breadcrumb title="Tambah Wisata">
+        <x-breadcrumb title="Edit Wisata">
             @foreach ($breadcrumbs as $breadcrumb => $url)
                 <div class="breadcrumb-item"><a class="text-decoration-none"
                         href="{{ $url }}">{{ $breadcrumb }}</a></div>
@@ -25,14 +25,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('wisata.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('wisata.update', $wisata->id) }}" method="post"
+                            enctype="multipart/form-data">
+                            @method('PATCH')
                             @csrf
                             <div class="form-group row mb-4">
                                 <x-label for="nama_obyek_wisata"
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" :value="__('Nama Obyek wisata')" />
                                 <div class="col-sm-12 col-md-7">
                                     <input type="text" name="nama_obyek_wisata" class="form-control"
-                                        value="{{ old('nama_obyek_wisata') }}" placeholder="Monas">
+                                        value="{{ $wisata->nama_obyek_wisata }}" placeholder="Monas">
                                     @error('nama_obyek_wisata')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -43,9 +45,14 @@
                                     :value="__('Wilayah')" />
                                 <div class="col-sm-12 col-md-7">
                                     <select name="wilayah" id="wilayah" class="form-control">
-                                        <option value="">Pilih</option>
                                         @foreach (App\Models\WISATA::WILAYAH as $wilayah)
-                                            <option value="{{ $wilayah }}">{{ $wilayah }}</option>
+                                            @if ($wilayah == $wisata->wilayah)
+                                                <option value="{{ $wilayah }}" selected>{{ $wilayah }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $wilayah }}">{{ $wilayah }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('wilayah')
@@ -58,7 +65,7 @@
                                     :value="__('Durasi')" />
                                 <div class="col-sm-12 col-md-7">
                                     <input type="time" name="durasi" class="form-control"
-                                        value="{{ old('durasi') }}" placeholder="Jakarta">
+                                        value="{{ $wisata->durasi }}" placeholder="Jakarta">
                                     @error('durasi')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -68,11 +75,11 @@
                                 <x-label for="image" :value="__('Gambar')"
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" />
                                 <div class="col-sm-12 col-md-7">
-                                    <img class="image-preview" style="width: 300px">
-
+                                    <img src="{{ asset('storage/' . $wisata->image) }}" class="image-preview"
+                                        style="width: 300px">
+                                    <input type="hidden" name="oldImage" value="{{ $wisata->image }}">
                                     <input class="mt-1" name="image" id="image" type="file"
                                         onchange="Preview()" />
-
                                     @error('image')
                                         <span class="text-danger d-block">{{ $message }}</span>
                                     @else

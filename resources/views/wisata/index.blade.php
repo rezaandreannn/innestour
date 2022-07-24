@@ -43,12 +43,14 @@
                                     @forelse ($wisatas as $wisata)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td><a href="h">Lihat gambar</a></td>
+                                            <td><a href="{{ asset('storage/' . $wisata->image) }}"
+                                                    class="badge badge-success" target="blink">Lihat gambar</a></td>
                                             <td>{{ $wisata->nama_obyek_wisata }}</td>
+                                            <td>{{ $wisata->wilayah }}</td>
                                             <td>{{ $wisata->durasi }}</td>
-
-                                            <x-action href="{{ route('wisata.edit', $wisata->id) }}"
-                                                action="{{ route('wisata.destroy', $wisata->id) }}" />
+                                            <td>
+                                                <x-action href="{{ route('wisata.edit', $wisata->id) }}"
+                                                    action="{{ route('wisata.destroy', $wisata->id) }}" />
                                             </td>
                                         @empty
                                             <td colspan="6" class="mt-4">

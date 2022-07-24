@@ -15,6 +15,7 @@ class CreatePaketsTable extends Migration
     {
         Schema::create('pakets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('wisata_id');
             $table->string('nama_program');
             $table->string('nama_paket');
             $table->string('tempat_duduk');

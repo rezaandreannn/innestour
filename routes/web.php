@@ -36,6 +36,7 @@ Route::middleware('auth', 'ceklogin:admin')->group(function () {
     Route::Resource('wisata', 'App\Http\Controllers\WisataController')->except(['show', 'edit', 'update', 'destroy']);
     Route::get('wisata/{wisata}', [WisataController::class, 'show'])->name('wisata.show');
     Route::get('wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
+    Route::patch('wisata/{wisata}', [WisataController::class, 'update'])->name('wisata.update');
     Route::delete('wisata/{wisata}', [WisataController::class, 'destroy'])->name('wisata.destroy');
 });
 

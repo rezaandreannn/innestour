@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Wisata;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WisataController extends Controller
 {
@@ -20,7 +21,7 @@ class WisataController extends Controller
             'Wisata' => route('wisata.index')
         ];
 
-        $theads = ['No', 'Nama paket', 'Obyek wisata', 'Tempat duduk', 'Harga', 'fasilitas', 'Aksi'];
+        $theads = ['No', 'gambar', 'Nama obyek wisata', 'Wilayah', 'Durasi', 'Aksi'];
 
         $wisatas = Wisata::all();
 
@@ -51,9 +52,9 @@ class WisataController extends Controller
     public function store(Request $request)
     {
 
-        dd($request);
         $data = $request->validate([
             'image' => 'required|image|max:1024',
+            'wilayah' => 'required',
             'nama_obyek_wisata' => 'required',
             'durasi' => 'required',
         ]);
@@ -90,7 +91,13 @@ class WisataController extends Controller
      */
     public function edit(Wisata $wisata)
     {
-        //
+
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard'),
+            'Wisata' => route('wisata.index'),
+            'Edit' => route('wisata.show', $wisata->id)
+        ];
+        return view('wisata.edit', compact('wisata', 'breadcrumbs'));
     }
 
     /**
@@ -102,7 +109,30 @@ class WisataController extends Controller
      */
     public function update(Request $request, Wisata $wisata)
     {
-        //
+
+
+        $data = $request->validate([
+            'image' => 'image|file|max:1024',
+            'wilayah' => 'required',
+            'nama_obyek_wisata' => 'required',
+            'durasi' => 'required',
+        ]);
+
+
+        if ($request->file('image')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $data['image'] = $request->file('image')->store('wisata/images');
+        } else {
+            $data['image'] = $request->oldImage;
+        }
+
+
+        Wisata::where('id', $wisata->id)
+            ->update($data);
+
+        return redirect()->route('wisata.index')->with('message', 'Berhasil mengubah data wisata ');
     }
 
     /**
@@ -114,9 +144,11 @@ class WisataController extends Controller
     public function destroy(Wisata $wisata)
     {
 
-        // dd($wisata);
-        Wisata::where('id', $wisata->id)
-            ->delete();
+        if ($wisata->image) {
+            Storage::delete($wisata->image);
+        }
+
+        Wisata::destroy($wisata->id);
 
         return redirect()->route('wisata.index')->with('message', 'Berhasil menghapus data wisata ');
     }
