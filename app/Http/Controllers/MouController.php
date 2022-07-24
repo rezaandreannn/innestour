@@ -89,7 +89,7 @@ class MouController extends Controller
         Mou::create($data);
 
 
-        return redirect()->route('mou.index')->with('message', 'berhasil menambahkan data MOU');
+        return redirect()->route('mou.index')->with('message', 'Anda telah melakukan pengajuan kerjasama dengan kami, tunggu beberapa saat untuk data dicek oleh admin');
     }
 
     /**
@@ -168,15 +168,16 @@ class MouController extends Controller
         return redirect()->route('mou.index')->with('success', 'Berhasil malakukan acc pada perusahan   ' . $nama . ' ');
     }
 
-    public function balasan(){
-        
+    public function balasan()
+    {
+
         $breadcrumbs = [
             'Dashboard' => route('dashboard'),
             'MOU' => route('mou.index'),
             'Detail Balasan' => route('mou.balasan')
         ];
 
-       $balasan = DB::table('balasans')
+        $balasan = DB::table('balasans')
             ->join('mous', 'mous.id', '=', 'balasans.mou_id')
             ->join('users', 'users.id', '=', 'balasans.user_id')
             ->where('mous.user_id', '=', Auth::user()->id)
@@ -188,7 +189,7 @@ class MouController extends Controller
         // $balasan = new Collection($collection);
         // dd($balasan);
         if (!$balasan) {
-            return redirect()->route('mou.index')->with('message', 'Maaf😓. Permintaan anda belum di acc oleh admin, tunggu beberapa saat ');
+            return redirect()->route('mou.index')->with('message', 'tunggu😓. Kami sedang melakukan pengecakan data anda');
         }
 
         return view('mou.balasan', compact('breadcrumbs', 'balasan'));

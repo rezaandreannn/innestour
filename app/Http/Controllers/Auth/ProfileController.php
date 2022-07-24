@@ -60,7 +60,7 @@ class ProfileController extends Controller
     {
 
         $data = $request->validate([
-            'no_hp' => 'required|numeric',
+            'no_hp' => 'required|regex:/^(08[0-9\s\-\+\(\)]*)$/|min:10|unique:users',
             'jenis_kelamin' => 'required',
             'image' => 'image|file|max:1024'
         ]);

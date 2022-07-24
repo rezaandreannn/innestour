@@ -59,20 +59,9 @@
                                             <td>{{ $mou->status }}</td>
                                             <td>
 
-                                                @if ($mou->status !== 'approve')
+                                                @if ($mou->status !== 'approve' && Auth::user()->role_id != 2)
                                                     <a href="{{ route('mou.show', $mou->id) }}"
                                                         class="btn btn-info btn-sm">cek</a>
-                                                    {{-- <form action="{{ route('mou.approve', $mou->id) }}"
-                                                        method="post" class="d-inline">
-                                                        @method('PATCH')
-                                                        @csrf
-
-                                                        <input type="hidden" value="{{ $mou->id }}"
-                                                            name="id">
-                                                        <input type="hidden" value="{{ $mou->nama_perusahaan }}"
-                                                            name="nama_perusahaan">
-                                                        <button type="submit" class="btn btn-info btn-sm">Acc</button>
-                                                    </form> --}}
                                                 @endif
                                                 <x-action href="{{ route('mou.edit', $mou->id) }}"
                                                     action="{{ route('mou.destroy', $mou->id) }}" />
