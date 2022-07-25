@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MouController;
+use App\Http\Controllers\PaketController;
+use App\Http\Controllers\WisataController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Frondend\HomeController;
-use App\Http\Controllers\WisataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,8 @@ Route::middleware('auth', 'ceklogin:admin')->group(function () {
     Route::get('wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
     Route::patch('wisata/{wisata}', [WisataController::class, 'update'])->name('wisata.update');
     Route::delete('wisata/{wisata}', [WisataController::class, 'destroy'])->name('wisata.destroy');
+    Route::get('detail/paket/create', [PaketController::class, 'createDetail'])->name('detail.create');
+    Route::post('detail/paket', [PaketController::class, 'storeDetailPaket'])->name('detail.store');
 });
 
 Route::middleware('auth', 'ceklogin:user')->group(function () {

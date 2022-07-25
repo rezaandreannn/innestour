@@ -15,7 +15,6 @@ class PaketSeeder extends Seeder
     public function run()
     {
         Paket::create([
-            'wisata_id' => 0,
             'nama_program' => '4 hari',
             'nama_paket' => 'lampung -jakarta',
             'tempat_duduk' => 50,

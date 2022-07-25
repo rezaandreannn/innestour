@@ -57,10 +57,12 @@
                                 <x-label for="durasi" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                     :value="__('Durasi')" />
                                 <div class="col-sm-12 col-md-7">
-                                    <input type="time" name="durasi" class="form-control"
-                                        value="{{ old('durasi') }}" placeholder="Jakarta">
+                                    <input type="number" name="durasi" min="1" class="form-control"
+                                        value="{{ old('durasi') }}" placeholder="30">
                                     @error('durasi')
                                         <span class="text-danger">{{ $message }}</span>
+                                    @else
+                                        <span class="text-small d-block text-muted">Satuan Menit</span>
                                     @enderror
                                 </div>
                             </div>

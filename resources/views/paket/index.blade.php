@@ -20,6 +20,7 @@
                     <div class="card">
                         <div class="card-header">
                             <a href="{{ route('paket.create') }}" class="btn btn-primary">Tambah Paket</a>
+                            <a href="{{ route('detail.create') }}" class="btn btn-info ml-1">Tambah Detail wisata</a>
                             <h4></h4>
                             <div class="card-header-form">
                                 <form>
@@ -43,10 +44,9 @@
                                     @forelse ($pakets as $paket)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $paket->nama_paket }}</td>
-                                            <td>{{ $paket->nama_program }}</td>
                                             <td><a href="{{ route('paket.show', $paket->id) }}"
-                                                    class="badge badge-success">Detail</a></td>
+                                                    class="badge badge-success">{{ $paket->nama_paket }}</a></td>
+                                            <td>{{ $paket->nama_program }}</td>
                                             <td>{{ $paket->tempat_duduk }} Kursi</td>
                                             <td>@currency($paket->harga) </td>
                                             <td style="max-width: 200px">{{ $paket->fasilitas }}</td>

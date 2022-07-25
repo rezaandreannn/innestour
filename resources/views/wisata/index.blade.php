@@ -47,7 +47,7 @@
                                                     class="badge badge-success" target="blink">Lihat gambar</a></td>
                                             <td>{{ $wisata->nama_obyek_wisata }}</td>
                                             <td>{{ $wisata->wilayah }}</td>
-                                            <td>{{ $wisata->durasi }}</td>
+                                            <td>{{ $wisata->durasi }} Mnt</td>
                                             <td>
                                                 <x-action href="{{ route('wisata.edit', $wisata->id) }}"
                                                     action="{{ route('wisata.destroy', $wisata->id) }}" />

@@ -15,7 +15,6 @@ class WisataController extends Controller
      */
     public function index()
     {
-
         $breadcrumbs = [
             'Dashboard' => route('dashboard'),
             'Wisata' => route('wisata.index')
@@ -23,7 +22,7 @@ class WisataController extends Controller
 
         $theads = ['No', 'gambar', 'Nama obyek wisata', 'Wilayah', 'Durasi', 'Aksi'];
 
-        $wisatas = Wisata::all();
+        $wisatas = Wisata::orderBy('wilayah', 'asc')->get();
 
         return view('wisata.index', compact('wisatas', 'breadcrumbs', 'theads'));
     }

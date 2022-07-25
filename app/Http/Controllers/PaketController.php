@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPaket;
 use App\Models\Paket;
+use App\Models\Wisata;
 use Illuminate\Http\Request;
 
 class PaketController extends Controller
@@ -15,13 +17,12 @@ class PaketController extends Controller
     public function index()
     {
 
-
         $breadcrumbs = [
             'Dashboard' => route('dashboard'),
             'Paket' => route('wisata.index')
         ];
 
-        $theads = ['No', 'Nama paket', 'Program', 'Obyek wisata', 'Tempat duduk', 'Harga', 'fasilitas', 'Aksi'];
+        $theads = ['No', 'Nama paket', 'Program', 'Tempat duduk', 'Harga', 'fasilitas', 'Aksi'];
 
         $pakets = Paket::all();
 
@@ -75,7 +76,16 @@ class PaketController extends Controller
      */
     public function show(Paket $paket)
     {
-        dd($paket);
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard'),
+            'Paket' => route('paket.index'),
+            'detail' => route('paket.show', $paket->id)
+        ];
+
+        $details = DetailPaket::where('paket_id', $paket->id)
+            ->get();
+
+        return view('paket.show', compact('paket', 'breadcrumbs', 'details'));
     }
 
     /**
@@ -134,5 +144,33 @@ class PaketController extends Controller
             ->delete();
 
         return redirect()->route('paket.index')->with('message', 'Berhasil menghapus data paket ');
+    }
+
+    public function createDetail()
+    {
+
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard'),
+            'Paket' => route('paket.index'),
+            'Create Detail' => route('detail.create')
+        ];
+        $pakets = Paket::pluck('id', 'nama_paket');
+
+        // dd($pakets);
+        $wisatas = Wisata::orderBy('nama_obyek_wisata', 'asc')->get();
+
+        return view('detailpaketwisata.create', compact('pakets', 'wisatas', 'breadcrumbs'));
+    }
+
+    public function storeDetailPaket(Request $request)
+    {
+        $data = $request->validate([
+            'paket_id' => 'required',
+            'wisata_id' => 'required',
+        ]);
+
+        DetailPaket::create($data);
+
+        return back()->with('message', 'berhasil menambahkan obyek wisata');
     }
 }

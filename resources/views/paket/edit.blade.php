@@ -32,8 +32,17 @@
                                 <x-label for="nama_paket" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                     :value="__('Nama Paket')" />
                                 <div class="col-sm-12 col-md-7">
-                                    <input type="text" name="nama_paket" class="form-control"
-                                        value="{{ $paket->nama_paket }}">
+                                    <select name="nama_paket" id="nama_paket" class="form-control">
+                                        @foreach (App\Models\PAKET::NAMA_PAKETS as $nama_paket)
+                                            @if ($nama_paket == $paket->nama_paket)
+                                                <option value="{{ $nama_paket }}" selected>{{ $nama_paket }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $nama_paket }}">{{ $nama_paket }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                     @error('nama_paket')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

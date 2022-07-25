@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Paket;
+
+use App\Models\DetailPaket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,8 +15,8 @@ class Wisata extends Model
 
     const WILAYAH = ['Jakarta', 'Jogja', 'Bandung'];
 
-    public function pakets()
+    public function detailpakets()
     {
-        return $this->hasMany(Paket::class);
+        return $this->hasMany(DetailPaket::class);
     }
 }
