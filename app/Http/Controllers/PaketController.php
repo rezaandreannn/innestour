@@ -149,6 +149,7 @@ class PaketController extends Controller
     public function createDetail()
     {
 
+
         $breadcrumbs = [
             'Dashboard' => route('dashboard'),
             'Paket' => route('paket.index'),
@@ -164,13 +165,23 @@ class PaketController extends Controller
 
     public function storeDetailPaket(Request $request)
     {
+
+        // $wisata_id[] = $request->wisata_id;
+
+        // dd($request->wisata_id);
+
         $data = $request->validate([
             'paket_id' => 'required',
             'wisata_id' => 'required',
         ]);
 
+
+        $data['wisata_id'] = $request->input('wisata_id');
+
         DetailPaket::create($data);
 
-        return back()->with('message', 'berhasil menambahkan obyek wisata');
+
+
+        return back()->with('message', 'berhasil menambahkan obyek wisata ke paket');
     }
 }

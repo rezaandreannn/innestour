@@ -14,6 +14,17 @@ class DetailPaket extends Model
     protected $guarded = ['id'];
     protected $with = ['paket', 'wisata'];
 
+
+    public function setWisataId($value)
+    {
+        $this->attributes['wisata_id'] = json_encode($value);
+    }
+
+    public function getWisataId($value)
+    {
+        return $this->attributes['wisata_id'] = json_decode($value);
+    }
+
     public function paket()
     {
         return $this->belongsTo(Paket::class);

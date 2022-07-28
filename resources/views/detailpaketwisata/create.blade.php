@@ -1,4 +1,4 @@
-<x-app-layout title="Tambah Paket">
+<x-app-layout title="Tambah wisata ke paket">
     @push('css')
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/summernote/dist/summernote-bs4.css') }}">
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/codemirror/lib/codemirror.css') }}">
@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ asset('stisla/node_modules/selectric/public/selectric.css') }}">
     @endpush
     <section class="section">
-        <x-breadcrumb title="Tambah Paket">
+        <x-breadcrumb title="Tambah wisata ke paket">
             @foreach ($breadcrumbs as $breadcrumb => $url)
                 <div class="breadcrumb-item"><a class="text-decoration-none"
                         href="{{ $url }}">{{ $breadcrumb }}</a></div>
@@ -42,7 +42,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row mb-4">
+                            {{-- <div class="form-group row mb-4">
                                 <x-label for="wisata_id" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                     :value="__('Nama obyek wisata')" />
                                 <div class="col-sm-12 col-md-7">
@@ -58,7 +58,28 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div> --}}
+
+                            <div class="form-group row mb-4">
+                                <x-label for="wisata_id" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                                    :value="__('Pilih obyek wisata')" />
+                                <div class="col-sm-12 col-md-7 ml-4">
+                                    @foreach ($wisatas as $wisata)
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-7">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $wisata->id }}" name="wisata_id[]" id="wisata_id">
+                                                <label class="form-check-label" for="wisata_id">
+                                                    {{ $wisata->nama_obyek_wisata }} -
+                                                </label>
+                                                <span style="font-weight: bold">{{ $wisata->wilayah }}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                </div>
                             </div>
+
                             <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                 <div class="col-sm-12 col-md-7">
