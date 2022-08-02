@@ -14,9 +14,4 @@ class Wisata extends Model
     protected $guarded = ['id'];
 
     const WILAYAH = ['Jakarta', 'Jogja', 'Bandung'];
-
-    public function detailpakets()
-    {
-        return $this->hasMany(DetailPaket::class);
-    }
 }

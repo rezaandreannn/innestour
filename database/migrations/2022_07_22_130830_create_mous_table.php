@@ -16,13 +16,21 @@ class CreateMousTable extends Migration
         Schema::create('mous', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('logo')->nullable();
+            $table->string('logo')
+                ->nullable();
             $table->string('nama_perusahaan');
             $table->string('email_perusahaan');
             $table->string('no_hp_perusahaan');
             $table->string('dokumen');
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending', 'acc', 'gagal'])
+                ->default('pending');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
         });
     }
 

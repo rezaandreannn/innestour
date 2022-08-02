@@ -54,19 +54,6 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
-                                <x-label for="durasi" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                                    :value="__('Durasi')" />
-                                <div class="col-sm-12 col-md-7">
-                                    <input type="number" name="durasi" min="1" class="form-control"
-                                        value="{{ old('durasi') }}" placeholder="30">
-                                    @error('durasi')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @else
-                                        <span class="text-small d-block text-muted">Satuan Menit</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
                                 <x-label for="image" :value="__('Gambar')"
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" />
                                 <div class="col-sm-12 col-md-7">

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Wisata;
+use App\Models\Negosiasi;
 use App\Models\DetailPaket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,8 +18,9 @@ class Paket extends Model
 
     const NAMA_PAKETS = ['Lampung - Jakarta', 'Lampung - Bandung', 'Lampung - Jogja', 'Lampung - Jakarta - Bandung', 'Lampung - Jakarta - Jogja', 'Lampung - Jakarta - Bandung - Jogja'];
 
-    public function detailpakets()
+
+    public function negosiasis()
     {
-        return $this->has(DetailPaket::class);
+        return $this->hasMany(Negosiasi::class);
     }
 }

@@ -22,7 +22,7 @@ class Usercontroller extends Controller
 
         $theads = ['No', 'Nama', 'Email', 'Role', 'Di buat', 'Di edit', 'Aksi'];
 
-        $users = User::with('role')->get();
+        $users = User::with('role', 'mous')->get();
 
         return view('user.index', compact('breadcrumbs', 'theads', 'users'));
     }

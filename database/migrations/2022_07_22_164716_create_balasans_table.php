@@ -20,6 +20,12 @@ class CreateBalasansTable extends Migration
             $table->string('dokumen');
             $table->string('deskripsi')->nullable();
             $table->timestamps();
+
+            $table->foreign('mou_id')
+                ->references('id')
+                ->on('mous')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
         });
     }
 

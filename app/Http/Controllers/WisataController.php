@@ -16,11 +16,11 @@ class WisataController extends Controller
     public function index()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Wisata' => route('wisata.index')
         ];
 
-        $theads = ['No', 'gambar', 'Nama obyek wisata', 'Wilayah', 'Durasi', 'Aksi'];
+        $theads = ['No', 'gambar', 'Nama obyek wisata', 'Wilayah', 'Aksi'];
 
         $wisatas = Wisata::orderBy('wilayah', 'asc')->get();
 
@@ -36,7 +36,7 @@ class WisataController extends Controller
     {
 
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Tambah' => route('wisata.create')
         ];
         return view('wisata.create', compact('breadcrumbs'));
@@ -55,7 +55,6 @@ class WisataController extends Controller
             'image' => 'required|image|max:1024',
             'wilayah' => 'required',
             'nama_obyek_wisata' => 'required',
-            'durasi' => 'required',
         ]);
 
         $data['image'] = $request->file('image')->store('wisata/images');
@@ -74,7 +73,7 @@ class WisataController extends Controller
     public function show(Wisata $wisata)
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Wisata' => route('wisata.index'),
             'Detail' => route('wisata.show', $wisata->id)
         ];
@@ -92,7 +91,7 @@ class WisataController extends Controller
     {
 
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Wisata' => route('wisata.index'),
             'Edit' => route('wisata.show', $wisata->id)
         ];
@@ -114,7 +113,6 @@ class WisataController extends Controller
             'image' => 'image|file|max:1024',
             'wilayah' => 'required',
             'nama_obyek_wisata' => 'required',
-            'durasi' => 'required',
         ]);
 
 

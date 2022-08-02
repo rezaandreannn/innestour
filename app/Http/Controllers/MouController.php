@@ -24,19 +24,29 @@ class MouController extends Controller
             $mous = Mou::with('user')->get();
 
             $theads = ['No', 'Nama User', 'Logo', 'Nama Perusahaan', 'Dokumen', 'Di buat', 'Status', 'Aksi'];
+            $breadcrumbs = [
+                'Dashboard' => route('dashboard.index'),
+                'MOU' => route('mou.index')
+            ];
+            return view('mou.index', compact('breadcrumbs', 'theads', 'mous'));
         } else {
             $mous = Mou::with('user')->where('user_id', Auth::user()->id)->get();
 
             $theads = ['No', 'Nama User', 'Logo', 'Nama Perusahaan', 'Dokumen', 'Di buat', 'Status', 'Aksi'];
+
+            $balasan = DB::table('balasans')
+                ->join('mous', 'mous.id', '=', 'balasans.mou_id')
+                ->join('users', 'users.id', '=', 'balasans.user_id')
+                ->where('mous.user_id', '=', Auth::user()->id)
+                ->first();
+
+
+            // if (!$balasan) {
+            //     return redirect()->route('mou.index')->with('message', 'tunggu😓. Kami sedang melakukan pengecakan data anda');
+            // }
+
+            return view('frondend.mou.index', compact('theads', 'mous', 'balasan'));
         }
-        $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
-            'MOU' => route('mou.index')
-        ];
-
-
-
-        return view('mou.index', compact('breadcrumbs', 'theads', 'mous'));
     }
 
     /**
@@ -46,13 +56,17 @@ class MouController extends Controller
      */
     public function create()
     {
-        $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
-            'MOU' => route('mou.index'),
-            'Tambah' => route('mou.create')
-        ];
+        // $breadcrumbs = [
+        //     'Dashboard' => route('dashboard'),
+        //     'MOU' => route('mou.index'),
+        //     'Tambah' => route('mou.create')
+        // ];
 
-        return view('mou.create', compact('breadcrumbs'));
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
+        return view('mou.create');
     }
 
     /**
@@ -102,7 +116,7 @@ class MouController extends Controller
     {
 
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'MOU' => route('mou.index'),
             'Detail' => route('mou.show', $mou->id)
         ];
@@ -141,7 +155,34 @@ class MouController extends Controller
      */
     public function destroy(Mou $mou)
     {
-        //
+        if (Auth::user()->role_id == 1) {
+            Mou::where('id', $mou->id)
+                ->delete();
+
+            return redirect()->route('mou.index')->with('message', 'berhasil menghapus kerjasama');
+        } else {
+
+            $update = date($mou->updated_at);
+
+            $hapus = date('Y-m-d', strtotime('+7 days'));
+
+            if ($mou->status == 'acc') {
+                if ($update > $hapus) {
+                    Mou::where('id', $mou->id)
+                        ->delete();
+
+                    return redirect()->route('mou.index')->with('message', 'berhasil membatalkan kerjasama');
+                } else {
+
+                    return redirect()->route('mou.index')->with('message', 'Anda bisa melakukan pembatalan kerjasama setelah 7 hari');
+                }
+            } else {
+                Mou::where('id', $mou->id)
+                    ->delete();
+
+                return redirect()->route('mou.index')->with('message', 'berhasil menghapus kerjasama');
+            }
+        }
     }
 
     public function approve(Request $request)
@@ -162,7 +203,7 @@ class MouController extends Controller
         Balasan::create($data);
 
         Mou::where('id', $id)->update([
-            'status' => 'approve'
+            'status' => 'acc'
         ]);
 
         return redirect()->route('mou.index')->with('success', 'Berhasil malakukan acc pada perusahan   ' . $nama . ' ');
@@ -172,7 +213,7 @@ class MouController extends Controller
     {
 
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'MOU' => route('mou.index'),
             'Detail Balasan' => route('mou.balasan')
         ];

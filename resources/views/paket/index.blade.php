@@ -49,7 +49,13 @@
                                             <td>{{ $paket->nama_program }}</td>
                                             <td>{{ $paket->tempat_duduk }} Kursi</td>
                                             <td>@currency($paket->harga) </td>
-                                            <td style="max-width: 200px">{{ $paket->fasilitas }}</td>
+                                            <td style="max-width: 200px">
+
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal{{ $paket->id }}">
+                                                    lihat
+                                                </button>
+                                            </td>
                                             <td>
                                                 <x-action href="{{ route('paket.edit', $paket->id) }}"
                                                     action="{{ route('paket.destroy', $paket->id) }}" />
@@ -72,4 +78,28 @@
             </div>
         </div>
     </section>
+
+
+
+    <!-- Modal -->
+    @foreach ($pakets as $paket)
+        <div class="modal fade" id="exampleModal{{ $paket->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Fasilitas {{ $paket->nama_paket }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {!! $paket->fasilitas !!}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    @endforeach
+
 </x-app-layout>

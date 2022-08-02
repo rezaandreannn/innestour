@@ -18,7 +18,6 @@ class CreateWisatasTable extends Migration
             $table->string('image');
             $table->string('nama_obyek_wisata');
             $table->string('wilayah');
-            $table->string('durasi');
             $table->timestamps();
         });
     }

@@ -60,29 +60,6 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
-                                <x-label for="fasilitas" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                                    :value="__('Fasilitas')" />
-                                <div class="col-sm-12 col-md-7">
-                                    <input type="text" name="fasilitas" class="form-control"
-                                        value="{{ $paket->fasilitas }}" placeholder="Snack">
-                                    @error('fasilitas')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
-                                <x-label for="tempat_duduk"
-                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3" :value="__('Tempat Duduk')" />
-                                <div class="col-sm-12 col-md-7">
-                                    <input type="number" name="tempat_duduk" class="form-control"
-                                        value="{{ $paket->tempat_duduk }}" placeholder="50" min="1"
-                                        minlength="3">
-                                    @error('tempat_duduk')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
                                 <x-label for="harga" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                     :value="__('Harga/Orang')" />
                                 <div class="col-sm-12 col-md-7">
@@ -92,6 +69,26 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="form-group row mb-4">
+                                <x-label for="fasilitas" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                                    :value="__('Fasilitas')" />
+                                <div class="col-sm-12 col-md-7">
+                                    <textarea name="fasilitas" id="fasilitas" class="summernote">{!! $paket->fasilitas !!}</textarea>
+                                </div>
+                                @error('fasilitas')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group row mb-4">
+                                <x-label for="wisata" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                                    :value="__('Wisata')" />
+                                <div class="col-sm-12 col-md-7">
+                                    <textarea name="wisata" id="wisata" class="summernote">{!! $paket->wisata !!}</textarea>
+                                </div>
+                                @error('wisata')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>

@@ -23,6 +23,8 @@ class User extends Authenticatable
         'id'
     ];
 
+    protected $with = 'mous';
+
 
     /**
      * The attributes that should be hidden for serialization.

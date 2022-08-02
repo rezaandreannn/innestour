@@ -18,7 +18,7 @@ class PaketController extends Controller
     {
 
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Paket' => route('wisata.index')
         ];
 
@@ -37,7 +37,7 @@ class PaketController extends Controller
     public function create()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Paket' => route('paket.index'),
             'Tambah' => route('paket.create')
         ];
@@ -55,7 +55,7 @@ class PaketController extends Controller
     {
 
         $data = $request->validate([
-            'nama_paket' => 'required',
+            'nama_paket' => ['required', 'string', 'max:255', 'unique:pakets'],
             'nama_program' => 'required',
             'tempat_duduk' => 'required|numeric',
             'harga' => 'required|numeric',
@@ -76,16 +76,16 @@ class PaketController extends Controller
      */
     public function show(Paket $paket)
     {
-        $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
-            'Paket' => route('paket.index'),
-            'detail' => route('paket.show', $paket->id)
-        ];
+        // $breadcrumbs = [
+        //     'Dashboard' => route('dashboard.index'),
+        //     'Paket' => route('paket.index'),
+        //     'detail' => route('paket.show', $paket->id)
+        // ];
 
-        $details = DetailPaket::where('paket_id', $paket->id)
-            ->get();
+        // $details = DetailPaket::where('paket_id', $paket->id)
+        //     ->get();
 
-        return view('paket.show', compact('paket', 'breadcrumbs', 'details'));
+        // return view('paket.show', compact('paket', 'breadcrumbs', 'details'));
     }
 
     /**
@@ -97,7 +97,7 @@ class PaketController extends Controller
     public function edit(Paket $paket)
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Paket' => route('paket.index'),
             'Edit' => route('paket.edit', $paket->id)
         ];
@@ -120,9 +120,9 @@ class PaketController extends Controller
         $data = $request->validate([
             'nama_paket' => 'required',
             'nama_program' => 'required',
-            'tempat_duduk' => 'required|numeric',
             'harga' => 'required|numeric',
             'fasilitas' => 'required',
+            'wisata' => 'required'
         ]);
 
         Paket::where('id', $paket->id)
@@ -148,19 +148,18 @@ class PaketController extends Controller
 
     public function createDetail()
     {
+        //     $breadcrumbs = [
+        //         'Dashboard' => route('dashboard.index'),
+        //         'Paket' => route('paket.index'),
+        //         'Create Detail' => route('detail.create')
+        //     ];
+        //     $pakets = Paket::pluck('id', 'nama_paket');
 
+        //     // dd($pakets);
+        //     $wisatas = Wisata::orderBy('nama_obyek_wisata', 'asc')->get();
 
-        $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
-            'Paket' => route('paket.index'),
-            'Create Detail' => route('detail.create')
-        ];
-        $pakets = Paket::pluck('id', 'nama_paket');
-
-        // dd($pakets);
-        $wisatas = Wisata::orderBy('nama_obyek_wisata', 'asc')->get();
-
-        return view('detailpaketwisata.create', compact('pakets', 'wisatas', 'breadcrumbs'));
+        //     return view('detailpaketwisata.create', compact('pakets', 'wisatas', 'breadcrumbs'));
+        // }
     }
 
     public function storeDetailPaket(Request $request)
@@ -170,18 +169,19 @@ class PaketController extends Controller
 
         // dd($request->wisata_id);
 
-        $data = $request->validate([
-            'paket_id' => 'required',
-            'wisata_id' => 'required',
-        ]);
+        //     $data = $request->validate([
+        //         'paket_id' => 'required',
+        //         'wisata_id' => 'required',
+        //     ]);
 
 
-        $data['wisata_id'] = $request->input('wisata_id');
+        //     $data['wisata_id'] = $request->input('wisata_id');
 
-        DetailPaket::create($data);
+        //     DetailPaket::create($data);
 
 
 
-        return back()->with('message', 'berhasil menambahkan obyek wisata ke paket');
+        //     return back()->with('message', 'berhasil menambahkan obyek wisata ke paket');
+        // }
     }
 }

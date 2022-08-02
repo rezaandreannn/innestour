@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function show()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            // 'Dashboard' => route('dashboard.index'),
             'Profile' => route('profile.show')
         ];
 

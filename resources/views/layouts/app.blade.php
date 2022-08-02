@@ -15,9 +15,19 @@
     <!-- CSS Libraries -->
     @stack('css')
 
+    {{-- trik editor --}}
+    <link rel="stylesheet" href="{{ asset('trix/trix.css') }}">
+    <script type="text/javascript" src="{{ asset('trix/trix.js') }}"></script>
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('stisla/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/assets/css/components.css') }}">
+
+    <style>
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>

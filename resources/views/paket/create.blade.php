@@ -53,17 +53,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row mb-4">
-                                <x-label for="fasilitas" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                                    :value="__('Fasilitas')" />
-                                <div class="col-sm-12 col-md-7">
-                                    <input type="text" name="fasilitas" class="form-control"
-                                        value="{{ old('fasilitas') }}" placeholder="Snack">
-                                    @error('fasilitas')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+
                             <div class="form-group row mb-4">
                                 <x-label for="tempat_duduk"
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" :value="__('Tempat Duduk')" />
@@ -88,16 +78,27 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
+                                <x-label for="fasilitas" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                                    :value="__('Fasilitas')" />
+                                <div class="col-sm-12 col-md-7">
+                                    <textarea name="fasilitas" id="fasilitas" class="summernote"></textarea>
+                                </div>
+                                @error('fasilitas')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                 <div class="col-sm-12 col-md-7">
                                     <button class="btn btn-secondary" type="reset">Batal</button>
                                     <button class="btn btn-primary" type="submit">Simpan</button>
                                 </div>
                             </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
+        </div>
         </div>
     </section>
     @push('js-library')

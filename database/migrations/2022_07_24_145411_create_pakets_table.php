@@ -17,9 +17,10 @@ class CreatePaketsTable extends Migration
             $table->id();
             $table->string('nama_program');
             $table->string('nama_paket');
-            $table->string('tempat_duduk');
+            // $table->string('tempat_duduk');
             $table->string('harga');
-            $table->string('fasilitas');
+            $table->longText('fasilitas');
+            $table->longText('wisata')->nullable();
             $table->timestamps();
         });
     }
