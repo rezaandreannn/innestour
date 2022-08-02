@@ -31,11 +31,7 @@
                                     @if ($mous_user_id->user_id == Auth::user()->id)
                                         <a href="{{ route('mou.index') }}" class="btn btn-success">Lihat Detail MOU</a>
                                     @else
-                                        {{-- @if (Auth::user()->id == $mous_user_id)
-        <a href="{{ route('mou.index') }}" class="btn btn-success">Lihat Detail MOU</a>
-    @else --}}
                                         <a href="{{ route('mou.create') }}" class="btn btn-success">Gabung MOU</a>
-                                        {{-- @endif --}}
                                     @endif
                                 @else
                                     <a href="{{ route('mou.create') }}" class="btn btn-success">Gabung MOU</a>
@@ -144,8 +140,10 @@
                                     <h5>Wisata</h5>
                                     <li>{!! $paket->wisata !!}</li>
                                 </ul>
-                                <a href="{{ route('negosiasi.create', $paket->id) }}"
-                                    class="btn btn-lg btn-success">Tawar</a>
+                                @if ($mous_user_id)
+                                    <a href="{{ route('negosiasi.create', $paket->id) }}"
+                                        class="btn btn-lg btn-success">Tawar</a>
+                                @endif
                                 <a href="{{ route('invoice.detail', $paket->id) }}" class="btn btn-lg btn-primary"
                                     style="background-color: #6777ef">Pesan
                                     Sekarang</a>

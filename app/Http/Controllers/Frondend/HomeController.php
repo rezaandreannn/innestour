@@ -20,10 +20,14 @@ class HomeController extends Controller
         $mous = Mou::orderBy('updated_at', 'desc')->get();
 
         if (Auth::check()) {
-            $mous_user_id = $mous->where('user_id', Auth::user()->id)->first();
+            $mous_user_id = $mous->where('user_id', Auth::user()->id)
+                ->where('status', 'acc')
+                ->first();
         } else {
             $mous_user_id = '';
         }
+
+        // dd($mous_user_id);
 
         $pakets = Paket::all();
         // $pakets = DB::table('detail_pakets')
