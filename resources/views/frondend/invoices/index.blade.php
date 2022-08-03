@@ -12,74 +12,79 @@
                     </div>
                 @endif
 
-                <div class="card">
-                    <div class="card-body">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Active</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">Disabled</a>
-                            </li>
-                        </ul>
-                        <table class="table">
-                            <thead style="background-color: #6777ef" class="text-white">
-                                <tr>
-                                    <th>No</th>
-                                    {{-- <th>Nama</th> --}}
-                                    <th>Paket</th>
-                                    <th>Kursi</th>
-                                    <th>total tagihan</th>
-                                    <th>Tgl Berangkat</th>
-                                    {{-- <th>Waktu</th> --}}
-                                    {{-- <th>Hari</th> --}}
-                                    <th>Tgl Pesan</th>
-                                    <th>aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($invoices as $invoice)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        {{-- <td>{{ $invoice->user_id }}</td> --}}
-                                        <td>{{ $invoice->paket->nama_paket }}</td>
-                                        <td>{{ $invoice->kursi }}</td>
-                                        <td>@currency($invoice->total_tagihan)</td>
-                                        <td>
-                                            {{ date('d-m-Y', strtotime($invoice->tgl_berangkat)) }},
-                                            {{ date('H:i', strtotime($invoice->tgl_berangkat)) }} Wib
-                                        </td>
-                                        {{-- <td>{{ $invoice->user_id }} </td> --}}
-                                        <td>{{ date('d-m-Y', strtotime($invoice->created_at)) }}</td>
+                <div class="col-md-5 d-flex justify-content-center">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <form action="" method="get">
+                            <input type="submit" class="btn-check" name="bayar" id="btnradio1" autocomplete="off"
+                                value="pending" checked>
+                            <label
+                                class="btn {{ Request('bayar') == 'pending' ? 'btn-primary' : 'btn-outline-primary' }}"
+                                for="btnradio1">Belum bayar</label>
 
-                                        <td>
-                                            <a href="{{ route('invoice.edit', $invoice->id) }}"
-                                                class="btn btn-success btn-sm">Bayar</a>
-                                            <form action="{{ route('invoice.destroy', $invoice->id) }}" method="post"
-                                                class="d-inline">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
+                            <input type="submit" class="btn-check" name="bayar" id="btnradio2" autocomplete="off"
+                                value="lunas" checked>
+                            <label class="btn {{ Request('bayar') == 'lunas' ? 'btn-primary' : 'btn-outline-primary' }}"
+                                for="btnradio2">sudah bayar</label>
+                        </form>
                     </div>
                 </div>
 
 
 
+                <table class="table mt-3">
+                    <thead style="background-color: #6777ef" class="text-white">
+                        <tr>
+                            <th>No</th>
+                            {{-- <th>Nama</th> --}}
+                            <th>Paket</th>
+                            <th>Kursi</th>
+                            <th>total tagihan</th>
+                            <th>Tgl Berangkat</th>
+                            {{-- <th>Waktu</th> --}}
+                            {{-- <th>Hari</th> --}}
+                            <th>Tgl Pesan</th>
+                            @if (Request('bayar') != 'lunas')
+                                <th>aksi</th>
+                            @else
+                                <th>Kuitansi</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($invoices as $invoice)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                {{-- <td>{{ $invoice->user_id }}</td> --}}
+                                <td>{{ $invoice->paket->nama_paket }}</td>
+                                <td>{{ $invoice->kursi }}</td>
+                                <td>@currency($invoice->total_tagihan)</td>
+                                <td>
+                                    {{ date('d-m-Y', strtotime($invoice->tgl_berangkat)) }},
+                                    {{ date('H:i', strtotime($invoice->tgl_berangkat)) }} Wib
+                                </td>
+                                {{-- <td>{{ $invoice->user_id }} </td> --}}
+                                <td>{{ date('d-m-Y', strtotime($invoice->created_at)) }}</td>
+                                @if (Request('bayar') != 'lunas')
+                                    <td>
+                                        <a href="{{ route('invoice.edit', $invoice->id) }}"
+                                            class="btn btn-success btn-sm">Bayar</a>
+                                        <form action="{{ route('invoice.destroy', $invoice->id) }}" method="post"
+                                            class="d-inline">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        </form>
+                                    </td>
+                                @endif
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+
             </div>
         </div>
+    </div>
     </div>
 
 </x-frondend-layout>

@@ -15,10 +15,15 @@ use Illuminate\Support\Facades\Storage;
 class InvoiceController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $bayar = $request->bayar;
+        if (!$bayar) {
+            $bayar = 'pending';
+        }
 
         $invoices = Invoice::where('user_id', Auth::user()->id)
+            ->where('status', $bayar)
             ->orderBy('created_at', 'desc')
             ->get();
 
