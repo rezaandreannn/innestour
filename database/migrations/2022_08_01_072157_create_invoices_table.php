@@ -20,6 +20,9 @@ class CreateInvoicesTable extends Migration
             $table->integer('kursi');
             $table->timestamp('tgl_berangkat');
             $table->integer('total_tagihan');
+            $table->string('status')->default('pending');
+            $table->string('bank')->nullable();
+            $table->string('bukti')->nullable();
             $table->timestamps();
 
 

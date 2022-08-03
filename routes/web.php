@@ -24,8 +24,8 @@ use App\Http\Controllers\Frondend\ServiceController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('frondend.index');
+// Route::get('test', function () {
+//     return view('frondend.invoices.berhasil_bayar');
 // });
 
 // frondend
@@ -57,7 +57,11 @@ Route::middleware('auth', 'ceklogin:admin')->group(function () {
 
 Route::middleware('auth', 'ceklogin:user,admin')->group(function () {
     Route::get('mou/balasan', [MouController::class, 'balasan'])->name('mou.balasan');
+    Route::get('invoice', [InvoiceController::class, 'index'])->name('invoice.index');
+    Route::get('invoice{invoice}/edit', [InvoiceController::class, 'edit'])->name('invoice.edit');
     Route::get('invoice/detail/{id}', [InvoiceController::class, 'detail'])->name('invoice.detail');
+    Route::patch('invoice/{invoice}', [InvoiceController::class, 'update'])->name('invoice.update');
+    Route::delete('invoice/{invoice}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
     Route::get('negosiasi/', [NegosiasiController::class, 'index'])->name('negosiasi.index');
     Route::get('negosiasi/paket/{id}', [NegosiasiController::class, 'create'])->name('negosiasi.create');
     Route::post('negosiasi/store', [NegosiasiController::class, 'store'])->name('negosiasi.store');

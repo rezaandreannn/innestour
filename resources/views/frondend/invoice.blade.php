@@ -60,9 +60,15 @@
                         <div class="form-group row mb-4">
                             <x-label for="tgl_berangkat" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                 :value="__('Tgl Keberangkatan')" />
-                            <div class="col-sm-12 col-md-7">
-                                <input type="date" name="tgl_berangkatan" class="form-control">
-                                @error('kursi')
+                            <div class="col-sm-8 col-md-5">
+                                <input type="date" name="tanggal" class="form-control">
+                                @error('tanggal')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-sm-4 col-md-2">
+                                <input type="time" name="waktu" class="form-control">
+                                @error('waktu')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

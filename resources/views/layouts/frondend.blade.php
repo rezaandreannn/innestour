@@ -171,6 +171,9 @@
                         <a href="{{ route('profile.show') }}" class="dropdown-item has-icon">
                             <i class="far fa-user"></i> Profile
                         </a>
+                        <a href="{{ route('invoice.index') }}" class="dropdown-item has-icon">
+                            <i class="fas fa-history"></i> Histori Pemesanan
+                        </a>
                         <div class="dropdown-divider border-1"></div>
                         <div class="logout">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
@@ -301,7 +304,23 @@
     <script src="{{ asset('frondend/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('frondend/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('frondend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('frondend/lib/lightbox/js/lightbox.min.js') }}"></script>'
+    <script src="{{ asset('frondend/lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script>
+        function Preview() {
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.image-preview');
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+    </script>
 
     @stack('js=library')
 

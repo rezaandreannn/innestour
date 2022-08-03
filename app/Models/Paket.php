@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Wisata;
+use App\Models\Invoice;
 use App\Models\Negosiasi;
 use App\Models\DetailPaket;
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +23,10 @@ class Paket extends Model
     public function negosiasis()
     {
         return $this->hasMany(Negosiasi::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

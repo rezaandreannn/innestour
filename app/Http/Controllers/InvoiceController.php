@@ -2,16 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Paket;
+use App\Models\Wisata;
 use App\Models\Invoice;
 use App\Models\Negosiasi;
-use App\Models\Paket;
-use App\Models\User;
-use App\Models\Wisata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
+
+    public function index()
+    {
+
+        $invoices = Invoice::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $tgl_aktif = Carbon::now();
+        $data = Invoice::where('tgl_berangkat', '<', $tgl_aktif)
+            ->where('status', 'pending')
+            ->get();
+        if ($data) {
+            foreach ($data as $value) {
+                $value->delete();
+            }
+        }
+
+        return view('frondend.invoices.index', compact('invoices'));
+    }
+
     public function detail($paket_id)
     {
 
@@ -45,68 +68,98 @@ class InvoiceController extends Controller
         return view('frondend.invoice', compact('paket_r', 'paket'));
     }
 
+
     public function store(Request $request)
     {
 
+        // dd($request);
         $paket_id = $request->input('paket_id');
-        // $user = User::where('id', Auth::user()->id)->first();
-
-        // $paket = Paket::find($paket_id);
-
         // ubah int
         $paket_harga = (int)$request->harga;
         $kursi = (int)$request->kursi;
 
         $total = $paket_harga * $kursi;
 
-        // dd($total);
         $data =  $request->validate([
             'kursi' => 'required',
-            'tgl_berangkat' => 'required'
+            'tanggal' => 'required',
+            'waktu' => 'required'
         ]);
-        dd($data);
+
+        $now = Carbon::now();
+
+        $tgl_berangkat = date("Y-m-d H:i:s", strtotime($request->tanggal . " " . $request->waktu));
+
+        if ($tgl_berangkat <= $now) {
+            return back()->withErrors(['tanggal' => '
+            tanggal yang anda masukan sudah terlewati']);
+        }
 
         $data['user_id'] = Auth::user()->id;
         $data['paket_id'] = $paket_id;
+        $data['tgl_berangkat'] = $tgl_berangkat;
         $data['total_tagihan'] = $total;
 
         Invoice::create($data);
 
-        return view('frondend.invoice_berhasil');
+        $tanggal = $data['tgl_berangkat'];
 
-        // dd($total);
+        $day = date('D', strtotime($tanggal));
+        $dayList = array(
+            'Sun' => 'Minggu',
+            'Mon' => 'Senin',
+            'Tue' => 'Selasa',
+            'Wed' => 'Rabu',
+            'Thu' => 'Kamis',
+            'Fri' => 'Jumat',
+            'Sat' => 'Sabtu'
+        );
+
+        // dd($dayList[$day]);
+        $hari = $dayList[$day];
+
+        $waktu = date('H:i', strtotime($tanggal));
+        $tanggal = date('d-m-Y', strtotime($tanggal));
+
+        // get paket;
+        $nama_paket = Paket::where('id', $paket_id)->pluck('nama_paket')->first();
+
+        $limit = date('d-m-Y', strtotime('-2 days', strtotime($tanggal)));
+        // dd($limit);
+
+        return view('frondend.invoice_berhasil', compact('data', 'hari', 'waktu', 'tanggal', 'nama_paket'))->with('message', 'bayar sebelum tanggal ' . $limit . ' ');
+    }
+
+    public function edit(Invoice $invoice)
+    {
+
+        // dd($invoice);
+        return view('frondend.invoices.bayar', compact('invoice'));
+    }
+
+    public function update(Request $request, Invoice $invoice)
+    {
+        $data = $request->validate([
+            'bank' => 'required',
+            'bukti' => 'image|file|max:1024',
+
+        ]);
+
+        $data['bukti'] = $request->file('bukti')->store('invoice/bukti');
+
+        Invoice::where('id', $invoice->id)
+            ->update($data);
+
+        return redirect()->route('invoice.index')->with('message', 'Yey, Berhasil melakukan pembayaran');
+    }
+
+    public function destroy(Invoice $invoice)
+    {
 
 
-        // dd($paket);
-        // $data =  $request->validate([
-        //     'wisata_id' => 'required',
-        //     'kursi' => 'required'
-        // ]);
+        Invoice::where('id', $invoice->id)
+            ->delete();
 
-
-
-        // foreach ($request->wisata_id as $key => $value) {
-        //     $data = new Invoice();
-        //     $data->paket_id = $paket_id;
-        //     $data->user_id = $user->id;
-        //     $data->wisata_id = $value;
-        //     $data->kursi = $request->kursi;
-        //     $data->total_tagihan = $total;
-        //     $data->save();
-
-
-
-
-        //     [
-        //         'user_id' => $user->id,
-        //         'paket_id' => $paket_id,
-        //         'wisata_id' => $value,
-        //         'kursi' => $request->kursi
-        //     ];
-        //     Invoice::create($data);
-        // }
-
-        // $data['paket_id'] = $paket_id;
-        // $data['user_id'] = $user->id;
+        return back()->with('message', 'berhasil menghapus pesanan anda');
     }
 }
