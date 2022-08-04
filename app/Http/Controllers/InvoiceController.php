@@ -17,6 +17,31 @@ class InvoiceController extends Controller
 
     public function index(Request $request)
     {
+
+        if (Auth::user()->role_id == 1) {
+
+            $tgl_aktif = Carbon::now();
+            $data = Invoice::with('user')->where('tgl_berangkat', '<', $tgl_aktif)
+                ->where('status', 'pending')
+                ->get();
+            if ($data) {
+                foreach ($data as $value) {
+                    $value->delete();
+                }
+            }
+
+            $theads = ['No', 'Nama User', 'Nama paket', 'Kursi', 'Total tagihan', 'Status', 'Bukti', 'Tgl', 'Aksi'];
+            $breadcrumbs = [
+                'Dashboard' => route('dashboard.index'),
+                'Pembayaran' => route('invoice.index')
+            ];
+
+            $invoices = Invoice::orderBy('created_at', 'desc')->get();
+
+            return view('admin.invoice.index', compact('invoices', 'theads', 'breadcrumbs'));
+        }
+
+        // user
         $bayar = $request->bayar;
         if (!$bayar) {
             $bayar = 'pending';
@@ -137,6 +162,9 @@ class InvoiceController extends Controller
 
     public function edit(Invoice $invoice)
     {
+        if (Auth::user()->role_id == 1) {
+            return view('admin.invoice.cek', compact('invoice'));
+        }
 
         // dd($invoice);
         return view('frondend.invoices.bayar', compact('invoice'));
@@ -144,6 +172,19 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
+
+        if (Auth::user()->role_id == 1) {
+            $data = $request->validate([
+                'status' => 'required',
+            ]);
+
+            Invoice::where('id', $invoice->id)
+                ->update($data);
+
+            return redirect()->route('invoice.index')->with('message', ' Berhasil melakukan acc');
+        }
+
+        // user
         $data = $request->validate([
             'bank' => 'required',
             'bukti' => 'image|file|max:1024',

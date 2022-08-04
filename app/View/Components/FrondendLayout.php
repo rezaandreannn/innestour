@@ -2,12 +2,13 @@
 
 namespace App\View\Components;
 
+use App\Models\Wisata;
 use Illuminate\View\Component;
 
 class FrondendLayout extends Component
 {
-   
-    
+
+
     public $title;
     /**
      * Create a new component instance.
@@ -27,6 +28,10 @@ class FrondendLayout extends Component
      */
     public function render()
     {
+
+        // $wisatas = Wisata::orderBy('id', 'desc')->get()->limit(6);
+
+        // dd($wisatas);
         return view('layouts.frondend');
     }
 }

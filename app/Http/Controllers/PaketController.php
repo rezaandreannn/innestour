@@ -22,7 +22,7 @@ class PaketController extends Controller
             'Paket' => route('wisata.index')
         ];
 
-        $theads = ['No', 'Nama paket', 'Program', 'Tempat duduk', 'Harga', 'fasilitas', 'Aksi'];
+        $theads = ['No', 'Nama paket', 'Program', 'Tempat duduk', 'Harga', 'Fasilitas', 'Wisata', 'Aksi'];
 
         $pakets = Paket::all();
 
@@ -60,6 +60,7 @@ class PaketController extends Controller
             'tempat_duduk' => 'required|numeric',
             'harga' => 'required|numeric',
             'fasilitas' => 'required',
+            'wisata' => 'required'
         ]);
 
 

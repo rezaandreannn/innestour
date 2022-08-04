@@ -88,6 +88,16 @@
                                 @enderror
                             </div>
                             <div class="form-group row mb-4">
+                                <x-label for="wisata" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                                    :value="__('Wisata')" />
+                                <div class="col-sm-12 col-md-7">
+                                    <textarea name="wisata" id="wisata" class="summernote"></textarea>
+                                </div>
+                                @error('wisata')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                 <div class="col-sm-12 col-md-7">
                                     <button class="btn btn-secondary" type="reset">Batal</button>

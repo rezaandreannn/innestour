@@ -7,10 +7,10 @@
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1">
-                    <img class="img-fluid" src="{{ asset('frondend/img/carousel-1.jpg') }}" alt="Image">
+                    <img class="img-fluid" src="{{ asset('frondend/img/cou-1.jpg') }}" alt="Image">
                 </button>
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="1" aria-label="Slide 2">
-                    <img class="img-fluid" src="{{ asset('frondend/img/carousel-2.jpg') }}" alt="Image">
+                    <img class="img-fluid" src="{{ asset('frondend/img/cou-2.jpg') }}" alt="Image">
                 </button>
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="2" aria-label="Slide 3">
                     <img class="img-fluid" src="{{ asset('frondend/img/carousel-3.jpg') }}" alt="Image">
@@ -18,7 +18,7 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="{{ asset('frondend/img/carousel-1.jpg') }}" alt="Image">
+                    <img class="w-100" src="{{ asset('frondend/img/cou-1.jpg') }}" alt="Image">
                     <div class="carousel-caption">
                         <div class="p-1" style="max-width: 900px;">
                             <h4 class="text-white text-uppercase mb-4 animated zoomIn">Untuk mendapatkan harga murah
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('frondend/img/carousel-2.jpg') }}" alt="Image">
+                    <img class="w-100" src="{{ asset('frondend/img/cou-2.jpg') }}" alt="Image">
                     <div class="carousel-caption">
                         <div class="p-3" style="max-width: 900px;">
                             <h4 class="text-white text-uppercase mb-4 animated zoomIn">We Are Leader In</h4>
@@ -82,26 +82,26 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="img-border">
-                        <img class="img-fluid" src="{{ asset('frondend/img/about.jpg') }}" alt="">
+                        <img class="img-fluid" src="{{ asset('frondend/img/about-1.jpg') }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="h-100">
                         <h6 class="section-title bg-white text-start text-primary pe-3">Tentang Kami</h6>
-                        <h1 class="display-6 mb-4">#1 Solusi Digital dengan <span class="text-primary">10 Tahun</span>
-                            Pengalaman</h1>
-                        <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos.
-                            Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet
+                        <h1 class="display-6 mb-4">#1 Solusi Digital untuk <span class="text-primary">Tour</span>
+                            yang anda inginkan</h1>
+                        <p>PT.Innes Arsen Wisata yang beralamat Jln. Tawes No 38. Iringmulyo, Metro Timur, Kota Metro.
+                            Dengan ini kami menawarkan alternative paket wisata yang telah kami kemas secara menarik
+                            dalam bentuk paket perjalanan.
                         </p>
-                        <p class="mb-4">Stet no et lorem dolor et diam, amet duo ut dolore vero eos. No stet est diam
-                            rebum amet diam ipsum. Clita clita labore, dolor duo nonumy clita sit at, sed sit sanctus
-                            dolor eos.</p>
+                        <p class="mb-4">dalam hal ini kami membantu dalam pengelolaan transaportasi, penginapan,
+                            pengurusan administrasi serta segala hal yang menunjang suksesnya acara tersebut.</p>
                         <div class="d-flex align-items-center mb-4 pb-2">
                             <img class="flex-shrink-0 rounded-circle" src="{{ asset('storage/' . $admin->image) }}"
                                 alt="" style="width: 50px; height: 50px;">
                             <div class="ps-4">
                                 <h6>{{ $admin->name }}</h6>
-                                <small> {{ strtoupper($admin->role->name) }}</small>
+                                <small> {{ strtoupper($admin->role->name) }} - {{ config('app.name') }}</small>
                             </div>
                         </div>
                         {{-- <a class="btn btn-primary rounded-pill py-3 px-5" href="">Read More</a> --}}
@@ -124,8 +124,8 @@
                 @foreach ($pakets as $paket)
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="card mb-4 rounded-3 shadow-sm">
-                            <div class="card-header py-3">
-                                <h4 class="my-0 fw-normal">{{ $paket->nama_paket }}</h4>
+                            <div class="card-header py-3 text-white" style="background-color: #6777ef">
+                                <h4 class="my-0 fw-normal text-white">{{ $paket->nama_paket }}</h4>
                                 <small class="text-center">program {{ $paket->nama_program }}</small>
                             </div>
                             <div class="card-body">

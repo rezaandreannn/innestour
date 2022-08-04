@@ -9,6 +9,7 @@ use App\Models\DetailPaket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Wisata;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -30,6 +31,7 @@ class HomeController extends Controller
         // dd($mous_user_id);
 
         $pakets = Paket::all();
+
         // $pakets = DB::table('detail_pakets')
         //     ->join('pakets', 'pakets.id', '=', 'detail_pakets.paket_id')
         //     ->join('wisatas', 'wisatas.id', '=', 'detail_pakets.wisata_id')
