@@ -161,6 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Riskihajar\Terbilang\TerbilangServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -174,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
@@ -228,7 +231,9 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
 
     ],
 

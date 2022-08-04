@@ -12,20 +12,17 @@
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="1" aria-label="Slide 2">
                     <img class="img-fluid" src="{{ asset('frondend/img/cou-2.jpg') }}" alt="Image">
                 </button>
-                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="2" aria-label="Slide 3">
-                    <img class="img-fluid" src="{{ asset('frondend/img/carousel-3.jpg') }}" alt="Image">
-                </button>
+
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="w-100" src="{{ asset('frondend/img/cou-1.jpg') }}" alt="Image">
                     <div class="carousel-caption">
                         <div class="p-1" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">Untuk mendapatkan harga murah
+                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">Belum gabung MOU ?
                                 <br>
-                                Kerjasama bersama kami
+                                Gabung untuk mendapatkan harga yang anda inginkan
                             </h4>
-                            {{-- @dd(Auth::user()) --}}
                             @auth
                                 @if ($mous_user_id)
                                     @if ($mous_user_id->user_id == Auth::user()->id)
@@ -45,23 +42,28 @@
                 <div class="carousel-item">
                     <img class="w-100" src="{{ asset('frondend/img/cou-2.jpg') }}" alt="Image">
                     <div class="carousel-caption">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">We Are Leader In</h4>
-                            <h1 class="display-1 text-white mb-0 animated zoomIn">Creative & Innovative Digital
-                                Solution</h1>
+                        <div class="p-1" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">Belum gabung MOU ?
+                                <br>
+                                Gabung untuk mendapatkan harga yang anda inginkan
+                            </h4>
+                            @auth
+                                @if ($mous_user_id)
+                                    @if ($mous_user_id->user_id == Auth::user()->id)
+                                        <a href="{{ route('mou.index') }}" class="btn btn-success">Lihat Detail MOU</a>
+                                    @else
+                                        <a href="{{ route('mou.create') }}" class="btn btn-success">Gabung MOU</a>
+                                    @endif
+                                @else
+                                    <a href="{{ route('mou.create') }}" class="btn btn-success">Gabung MOU</a>
+                                @endif
+                            @else
+                                <a href="{{ route('mou.create') }}" class="btn btn-success">Gabung MOU</a>
+                            @endauth
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('frondend/img/carousel-3.jpg') }}" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">We Are Leader In</h4>
-                            <h1 class="display-1 text-white mb-0 animated zoomIn">Creative & Innovative Digital
-                                Solution</h1>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -23,14 +23,14 @@
                             {{-- <a href="{{ route('detail.create') }}" class="btn btn-info ml-1">Tambah Detail wisata</a> --}}
                             <h4></h4>
                             <div class="card-header-form">
-                                <form>
+                                {{-- <form>
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search">
                                         <div class="input-group-btn">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                         <div class="card-body p-0">

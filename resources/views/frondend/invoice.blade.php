@@ -41,6 +41,7 @@
                         <input type="hidden" name="paket_id" value="{{ $paket->id }}">
 
                         <input type="hidden" name="harga" value="{{ $paket_r->harga ?? $paket->harga }}">
+                        <input type="hidden" name="kode" value="000">
                         <div class="form-group row mb-4">
                             <x-label for="kursi" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                 :value="__('Pilih tempat duduk')" />
@@ -50,7 +51,7 @@
                                     <option value="40">40</option>
                                     <option value="44">44</option>
                                     <option value="48">48</option>
-                                    <option value="50">48</option>
+                                    <option value="50">50</option>
                                 </select>
                                 @error('kursi')
                                     <span class="text-danger">{{ $message }}</span>
@@ -74,7 +75,8 @@
                             </div>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Pesan</button>
+                        <button class="btn btn-primary border-0 btn-lg btn-block" type="submit"
+                            style="background-color: #6777ef">Pesan</button>
                     </form>
 
                 </div>

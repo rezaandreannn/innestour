@@ -156,7 +156,6 @@
                         <div class="dropdown-menu border-1 rounded-0 rounded-bottom m-0">
                             <a href="{{ route('mou.create') }}" class="dropdown-item">Ajukan Mou</a>
                             <a href="{{ route('mou.index') }}" class="dropdown-item">Detail Mou</a>
-                            <a href="feature.html" class="dropdown-item">Balasan Mou</a>
                         </div>
                     </div>
                 @endauth

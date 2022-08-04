@@ -2,41 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Paket;
 use App\Models\Wisata;
 use App\Models\Invoice;
+// use Barryvdh\DomPDF\PDF;
 use App\Models\Negosiasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Riskihajar\Terbilang\Facades\Terbilang;
 
 class InvoiceController extends Controller
 {
 
     public function index(Request $request)
     {
-
         if (Auth::user()->role_id == 1) {
-
+            $cari = $request->searchInvoice;
             $tgl_aktif = Carbon::now();
+
+
             $data = Invoice::with('user')->where('tgl_berangkat', '<', $tgl_aktif)
                 ->where('status', 'pending')
                 ->get();
+
+
+            // delete otomatis
             if ($data) {
                 foreach ($data as $value) {
                     $value->delete();
                 }
             }
 
-            $theads = ['No', 'Nama User', 'Nama paket', 'Kursi', 'Total tagihan', 'Status', 'Bukti', 'Tgl', 'Aksi'];
+            $theads = ['No', 'Kode', 'Nama User', 'Nama paket', 'Kursi', 'Total tagihan', 'Status', 'Bukti', 'Tgl', 'Kuitansi', 'Aksi'];
             $breadcrumbs = [
                 'Dashboard' => route('dashboard.index'),
                 'Pembayaran' => route('invoice.index')
             ];
 
-            $invoices = Invoice::orderBy('created_at', 'desc')->get();
+            $invoices = Invoice::orderBy('created_at', 'desc')
+                ->where('kode', 'like', "%" . $cari . "%")->paginate(3)->withQueryString();
 
             return view('admin.invoice.index', compact('invoices', 'theads', 'breadcrumbs'));
         }
@@ -78,11 +86,6 @@ class InvoiceController extends Controller
             'paket_id' => $paket_id->id
         ])->first();
 
-        // dd($negosiasi);
-        // )
-        // ->orWhere(')
-        // ->first();
-
         if ($negosiasi) {
             if ($negosiasi->status == 'acc') {
                 $paket_r = $negosiasi;
@@ -101,12 +104,12 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
-
         // dd($request);
         $paket_id = $request->input('paket_id');
         // ubah int
         $paket_harga = (int)$request->harga;
         $kursi = (int)$request->kursi;
+
 
         $total = $paket_harga * $kursi;
 
@@ -125,8 +128,11 @@ class InvoiceController extends Controller
             tanggal yang anda masukan sudah terlewati']);
         }
 
+
+
         $data['user_id'] = Auth::user()->id;
         $data['paket_id'] = $paket_id;
+        $data['kode'] = 'Pesan-' . rand(1000, 9999);
         $data['tgl_berangkat'] = $tgl_berangkat;
         $data['total_tagihan'] = $total;
 
@@ -148,6 +154,8 @@ class InvoiceController extends Controller
         // dd($dayList[$day]);
         $hari = $dayList[$day];
 
+
+
         $waktu = date('H:i', strtotime($tanggal));
         $tanggal = date('d-m-Y', strtotime($tanggal));
 
@@ -157,7 +165,7 @@ class InvoiceController extends Controller
         $limit = date('d-m-Y', strtotime('-2 days', strtotime($tanggal)));
         // dd($limit);
 
-        return view('frondend.invoice_berhasil', compact('data', 'hari', 'waktu', 'tanggal', 'nama_paket'))->with('message', 'bayar sebelum tanggal ' . $limit . ' ');
+        return view('frondend.invoice_berhasil', compact('data', 'hari', 'waktu', 'tanggal', 'nama_paket', 'total'))->with('message', 'bayar sebelum tanggal ' . $limit . ' ');
     }
 
     public function edit(Invoice $invoice)
@@ -166,7 +174,7 @@ class InvoiceController extends Controller
             return view('admin.invoice.cek', compact('invoice'));
         }
 
-        // dd($invoice);
+
         return view('frondend.invoices.bayar', compact('invoice'));
     }
 
@@ -201,11 +209,20 @@ class InvoiceController extends Controller
 
     public function destroy(Invoice $invoice)
     {
-
-
         Invoice::where('id', $invoice->id)
             ->delete();
 
         return back()->with('message', 'berhasil menghapus pesanan anda');
+    }
+
+    public function generatePDF($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+
+        $terbilang = Terbilang::make($invoice->total_tagihan);
+
+        $pdf = PDF::loadView('admin.invoice.generate-pdf', compact('invoice', 'terbilang'));
+        $pdf->stream('invoice-' . $invoice->tgl_berangkat . '.pdf');
+        return $pdf->download('invoice-' . $invoice->user->name . '.pdf');
     }
 }

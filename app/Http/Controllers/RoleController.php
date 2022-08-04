@@ -15,7 +15,7 @@ class RoleController extends Controller
     public function index()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Role' => route('role.index')
         ];
 
@@ -34,7 +34,7 @@ class RoleController extends Controller
     public function create()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Buat Role' => route('role.create')
         ];
 
@@ -79,7 +79,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Edit Role' => route('role.edit', $role->id)
         ];
         return view('role.edit', compact('role', 'breadcrumbs'));

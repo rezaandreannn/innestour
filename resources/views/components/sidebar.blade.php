@@ -19,6 +19,7 @@
                         <li><a class="nav-link" href="{{ route('mou.index') }}">MOU</a></li>
                         <li><a class="nav-link" href="{{ route('wisata.index') }}">Wisata</a></li>
                         <li><a class="nav-link" href="{{ route('paket.index') }}">Paket</a></li>
+                        <li><a class="nav-link" href="{{ route('negosiasi.index') }}">Negosiasi</a></li>
                         <li><a class="nav-link" href="{{ route('invoice.index') }}">Pembayaran</a></li>
                     </ul>
                 </li>

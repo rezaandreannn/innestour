@@ -15,7 +15,7 @@ class NegosiasiController extends Controller
 
         $breadcrumbs = [
             'Dashboard' => route('dashboard.index'),
-            'Paket' => route('wisata.index')
+            // 'Negosiasi' => route('wisata.index')
         ];
 
         $theads = ['No', 'Nama Pemesan', 'Paket',  'Harga', 'Status', 'Aksi'];

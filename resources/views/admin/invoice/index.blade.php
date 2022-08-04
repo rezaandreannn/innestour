@@ -23,9 +23,11 @@
 
                             <h4></h4>
                             <div class="card-header-form">
-                                <form>
+                                <form method="get">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" name="searchInvoice"
+                                            value="{{ Request('searchInvoice') }}" class="form-control"
+                                            placeholder="Cari kode pesan">
                                         <div class="input-group-btn">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -41,9 +43,10 @@
                                             <th>{{ $thead }}</th>
                                         @endforeach
                                     </tr>
-                                    @forelse ($invoices as $invoice)
+                                    @forelse ($invoices as $key => $invoice)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $invoices->firstItem() + $key }}</td>
+                                            <td>{{ $invoice->kode }}</td>
                                             <td>{{ $invoice->user->name }}</td>
                                             <td style="max-width: 200px">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -64,10 +67,25 @@
                                             @else
                                                 <td></td>
                                             @endif
-                                            <td>{{ $invoice->updated_at }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($invoice->updated_at)) }}</td>
                                             <td>
-                                                <x-action href="{{ route('invoice.edit', $invoice->id) }}"
-                                                    action="{{ route('invoice.destroy', $invoice->id) }}" />
+                                                @if ($invoice->status == 'lunas')
+                                                    <a href="{{ route('generate.invoice', $invoice->id) }}"><i
+                                                            class="fas fa-download"></i></a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($invoice->status == 'pending' && $invoice->bukti != null)
+                                                    <a href="{{ route('invoice.edit', $invoice->id) }}"
+                                                        class="btn btn-warning btn-sm mb-1 mt-1">Cek</a>
+                                                @endif
+                                                <form action="{{ route('invoice.destroy', $invoice->id) }}"
+                                                    method="post" class="d-inline">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                </form>
+
                                             </td>
                                         @empty
                                             <td colspan="6" class="mt-4">
@@ -80,6 +98,9 @@
                                         </tr>
                                     @endforelse
                                 </table>
+                                <div class="d-flex justify-content-end">
+                                    {{ $invoices->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -120,7 +141,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="buktiModalLabel">Bukti Pembayaran {{ $invoice->user->name }}</h5>
+                        <h5 class="modal-title" id="buktiModalLabel">Bukti Pembayaran {{ $invoice->user->name }}
+                            <br>
+                            Jenis Paket : {{ $invoice->paket->nama_paket }} / ({{ $invoice->paket->nama_program }})
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

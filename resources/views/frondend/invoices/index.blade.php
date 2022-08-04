@@ -19,12 +19,12 @@
                                 value="pending" checked>
                             <label
                                 class="btn {{ Request('bayar') == 'pending' ? 'btn-primary' : 'btn-outline-primary' }}"
-                                for="btnradio1">Belum bayar</label>
+                                for="btnradio1">Pending</label>
 
                             <input type="submit" class="btn-check" name="bayar" id="btnradio2" autocomplete="off"
                                 value="lunas" checked>
                             <label class="btn {{ Request('bayar') == 'lunas' ? 'btn-primary' : 'btn-outline-primary' }}"
-                                for="btnradio2">sudah bayar</label>
+                                for="btnradio2">Lunas</label>
                         </form>
                     </div>
                 </div>
@@ -35,10 +35,10 @@
                     <thead style="background-color: #6777ef" class="text-white">
                         <tr>
                             <th>No</th>
-                            {{-- <th>Nama</th> --}}
+                            <th>Kode</th>
                             <th>Paket</th>
                             <th>Kursi</th>
-                            <th>total tagihan</th>
+                            <th>Total tagihan</th>
                             <th>Tgl Berangkat</th>
                             {{-- <th>Waktu</th> --}}
                             {{-- <th>Hari</th> --}}
@@ -54,7 +54,7 @@
                         @foreach ($invoices as $invoice)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                {{-- <td>{{ $invoice->user_id }}</td> --}}
+                                <td>{{ $invoice->kode }}</td>
                                 <td>{{ $invoice->paket->nama_paket }}</td>
                                 <td>{{ $invoice->kursi }}</td>
                                 <td>@currency($invoice->total_tagihan)</td>
@@ -66,14 +66,24 @@
                                 <td>{{ date('d-m-Y', strtotime($invoice->created_at)) }}</td>
                                 @if (Request('bayar') != 'lunas')
                                     <td>
-                                        <a href="{{ route('invoice.edit', $invoice->id) }}"
-                                            class="btn btn-success btn-sm">Bayar</a>
-                                        <form action="{{ route('invoice.destroy', $invoice->id) }}" method="post"
-                                            class="d-inline">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
+                                        @if ($invoice->bukti)
+                                            <span class="text-success">Sedang dicek Admin</span>
+                                        @else
+                                            <a href="{{ route('invoice.edit', $invoice->id) }}"
+                                                class="btn btn-success btn-sm">Bayar</a>
+                                            <form action="{{ route('invoice.destroy', $invoice->id) }}" method="post"
+                                                class="d-inline">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                @else
+                                    <td>
+                                        <a href="{{ route('generate.invoice', $invoice->id) }}"><i
+                                                class="fas fa-download">
+                                                Unduh</i></a>
                                     </td>
                                 @endif
                             </tr>

@@ -1,6 +1,6 @@
-<x-app-layout title="Paket">
+<x-app-layout title="Negosiasi">
     <section class="section">
-        <x-breadcrumb title="Paket">
+        <x-breadcrumb title="Negosiasi">
             @foreach ($breadcrumbs as $breadcrumb => $url)
                 <div class="breadcrumb-item"><a class="text-decoration-none"
                         href="{{ $url }}">{{ $breadcrumb }}</a></div>
@@ -19,18 +19,18 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('paket.create') }}" class="btn btn-primary">Tambah Paket</a>
-                            <a href="{{ route('detail.create') }}" class="btn btn-info ml-1">Tambah Detail wisata</a>
+                            {{-- <a href="{{ route('paket.create') }}" class="btn btn-primary">Tambah Paket</a>
+                            <a href="{{ route('detail.create') }}" class="btn btn-info ml-1">Tambah Detail wisata</a> --}}
                             <h4></h4>
                             <div class="card-header-form">
-                                <form>
+                                {{-- <form>
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search">
                                         <div class="input-group-btn">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -54,14 +54,25 @@
                                             <td>@currency($negosiasi->harga)</td>
                                             <td>{{ $negosiasi->status }}</td>
                                             <td>
-
-                                                <form action="{{ route('negosiasi.update', $negosiasi->id) }}"
-                                                    method="post">
-                                                    @method('PATCH')
-                                                    @csrf
-                                                    <input type="hidden" name="status" value="acc">
-                                                    <button type="submit" class="btn btn-success btn-sm">Acc</button>
-                                                </form>
+                                                @if ($negosiasi->status != 'acc')
+                                                    <form action="{{ route('negosiasi.update', $negosiasi->id) }}"
+                                                        method="post">
+                                                        @method('PATCH')
+                                                        @csrf
+                                                        <input type="hidden" name="status" value="acc">
+                                                        <button type="submit"
+                                                            class="btn btn-success btn-sm">Acc</button>
+                                                    </form>
+                                                @else
+                                                    <form action="{{ route('negosiasi.update', $negosiasi->id) }}"
+                                                        method="post">
+                                                        @method('PATCH')
+                                                        @csrf
+                                                        <input type="hidden" name="status" value="acc">
+                                                        <button type="submit" class="btn btn-success btn-sm "
+                                                            disabled>Acc</button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

@@ -38,10 +38,10 @@ Route::get('/layanan-kami', ServiceController::class)->name('service.index');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
 
 Route::middleware('auth', 'ceklogin:admin')->group(function () {
+
     Route::Resource('role', 'App\Http\Controllers\RoleController');
     Route::Resource('user', 'App\Http\Controllers\UserController');
     Route::Resource('paket', 'App\Http\Controllers\PaketController');
@@ -56,6 +56,7 @@ Route::middleware('auth', 'ceklogin:admin')->group(function () {
 });
 
 Route::middleware('auth', 'ceklogin:user,admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('mou/balasan', [MouController::class, 'balasan'])->name('mou.balasan');
     Route::get('invoice', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::get('invoice{invoice}/edit', [InvoiceController::class, 'edit'])->name('invoice.edit');
@@ -67,16 +68,20 @@ Route::middleware('auth', 'ceklogin:user,admin')->group(function () {
     Route::post('negosiasi/store', [NegosiasiController::class, 'store'])->name('negosiasi.store');
 
     Route::post('invoice/store', [InvoiceController::class, 'store'])->name('invoice.store');
+    Route::get('generate/invoice/{id}', [InvoiceController::class, 'generatePDF'])->name('generate.invoice');
     // Route::Resource('invoice', 'App\Http\Controllers\InvoiceController')->except('invoice.index');
+    route::get('mou/approve/{id}/edit', [MouController::class, 'accForm'])->name('mou.approve.form');
+    route::patch('mou/approve', [MouController::class, 'approve'])->name('mou.approve');
+    Route::resource('mou', 'App\Http\Controllers\MouController');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
+
+    Route::get('/profile/update', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/ubah-password', [ProfileController::class, 'ubahPassword'])->name('profile.ubahpassword');
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 
-route::get('mou/approve/{id}/edit', [MouController::class, 'accForm'])->name('mou.approve.form');
-route::patch('mou/approve', [MouController::class, 'approve'])->name('mou.approve');
-Route::resource('mou', 'App\Http\Controllers\MouController');
-
-Route::get('/profile/update', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::patch('/profile/ubah-password', [ProfileController::class, 'ubahPassword'])->name('profile.ubahpassword');
-Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 require __DIR__ . '/auth.php';

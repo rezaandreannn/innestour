@@ -21,6 +21,7 @@
                             <th>Tgl Berangkat</th>
                             <th>Waktu</th>
                             <th>Hari</th>
+                            <th>Total Tagihan</th>
 
                         </tr>
                     </thead>
@@ -33,6 +34,7 @@
                             <td>{{ $tanggal }}</td>
                             <td>{{ $waktu }} Wib</td>
                             <td>{{ $hari }}</td>
+                            <td>@currency($total)</td>
                         </tr>
                     </tbody>
                 </table>

@@ -15,6 +15,7 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
             $table->foreignId('user_id');
             $table->foreignId('paket_id');
             $table->integer('kursi');

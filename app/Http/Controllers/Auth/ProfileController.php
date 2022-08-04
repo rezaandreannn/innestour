@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Mou;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,12 +13,27 @@ class ProfileController extends Controller
 {
     public function show()
     {
-        $breadcrumbs = [
-            // 'Dashboard' => route('dashboard.index'),
-            'Profile' => route('profile.show')
-        ];
 
-        return view('auth.profile', compact('breadcrumbs'));
+        if (Auth::user()->role_id == 1) {
+            $breadcrumbs = [
+                'Dashboard' => route('dashboard.index'),
+                'Profile' => route('profile.show')
+            ];
+
+            return view('auth.profile', compact('breadcrumbs'));
+        } else
+
+            $mous = Mou::orderBy('updated_at', 'desc')->get();
+
+        if (Auth::check()) {
+            $mous_user_id = $mous->where('user_id', Auth::user()->id)
+                ->where('status', 'acc')
+                ->first();
+        } else {
+            $mous_user_id = '';
+        }
+
+        return view('frondend.profile', compact('mous_user_id'));
     }
 
     public function ubahPassword(Request $request)
@@ -49,7 +65,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'Edit Profile' => route('profile.edit')
         ];
 

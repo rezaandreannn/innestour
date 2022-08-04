@@ -16,7 +16,7 @@ class Usercontroller extends Controller
     public function index()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'User' => route('user.index')
         ];
 
@@ -35,8 +35,8 @@ class Usercontroller extends Controller
     public function create()
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
-            'User' => route('user.create')
+            'Dashboard' => route('dashboard.index'),
+            'User' => route('user.index')
         ];
 
 
@@ -76,7 +76,7 @@ class Usercontroller extends Controller
     public function show(User $user)
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard.index'),
             'User' => route('user.index'),
             'Detail' => route('user.show', $user->id)
         ];
@@ -92,7 +92,7 @@ class Usercontroller extends Controller
     public function edit(User $user)
     {
         $breadcrumbs = [
-            'Dashboard' => route('dashboard'),
+            'Dashboard' => route('dashboard,index'),
             'User' => route('user.index'),
             'Edit' => route('user.edit', $user->id)
         ];

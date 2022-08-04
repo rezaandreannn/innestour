@@ -13,7 +13,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card mb-5 col-10">
+                        {{-- <div class="card mb-5 col-10">
                             <div class="card-body">
                                 panduan mou
                                 <ul>
@@ -22,7 +22,7 @@
                                     <li>and have appropriate left margin</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <form action="{{ route('mou.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
