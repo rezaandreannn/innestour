@@ -55,24 +55,19 @@
                                             <td>{{ $negosiasi->status }}</td>
                                             <td>
                                                 @if ($negosiasi->status != 'acc')
-                                                    <form action="{{ route('negosiasi.update', $negosiasi->id) }}"
-                                                        method="post">
-                                                        @method('PATCH')
-                                                        @csrf
-                                                        <input type="hidden" name="status" value="acc">
-                                                        <button type="submit"
-                                                            class="btn btn-success btn-sm">Acc</button>
-                                                    </form>
-                                                @else
-                                                    <form action="{{ route('negosiasi.update', $negosiasi->id) }}"
-                                                        method="post">
-                                                        @method('PATCH')
-                                                        @csrf
-                                                        <input type="hidden" name="status" value="acc">
-                                                        <button type="submit" class="btn btn-success btn-sm "
-                                                            disabled>Acc</button>
-                                                    </form>
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-toggle="modal" data-target="#accModal{{ $negosiasi->id }}">
+                                                        Acc/Tolak
+                                                    </button>
                                                 @endif
+                                                <form action="{{ route('negosiasi.destroy', $negosiasi->id) }}"
+                                                    method="post" class="d-inline">
+                                                    @method('DELETE')
+                                                    @csrf
+
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm d-inline">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @empty
@@ -117,6 +112,55 @@
                             <li class="list-group-item"><span class="text-primary">Harga</span> <br>
                                 @currency($negosiasi->paket->harga)</li>
                         </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- acc modal --}}
+    @foreach ($negosiasis as $negosiasi)
+        <div class="modal fade" id="accModal{{ $negosiasi->id }}" tabindex="-1" aria-labelledby="accModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="accModalLabel">Paket {{ $negosiasi->paket->nama_paket }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success" role="alert">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <p>Harga Paket Normal</p>
+                                </div>
+                                <div class="col-md-7">: @currency($negosiasi->paket->harga)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <p>Harga yang diajukan</p>
+                                </div>
+                                <div class="col-md-7">: @currency($negosiasi->harga)</div>
+                            </div>
+
+                        </div>
+                        <form action="{{ route('negosiasi.update', $negosiasi->id) }}" method="post">
+                            @method('PATCH')
+                            @csrf
+                            <div class="form-group">
+                                <label for="status">Pilih status</label>
+                                <select class="form-control" name="status" id="status">
+                                    <option value="acc">Acc</option>
+                                    <option value="tolak">Tolak</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
                     </div>
 
                 </div>

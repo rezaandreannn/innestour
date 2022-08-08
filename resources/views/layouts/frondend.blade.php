@@ -158,6 +158,12 @@
                             <a href="{{ route('mou.index') }}" class="dropdown-item">Detail Mou</a>
                         </div>
                     </div>
+                    <a href="{{ route('negosiasi.index') }}"
+                        class="nav-item nav-link @if (Request::is('negosiasi')) 'active'
+                        @elseif(App\Models\Negosiasi::where('user_id', Auth::user()->id)->first())
+                        'disabled'
+                        @else
+                        '' @endif">Negosiasi</a>
                 @endauth
             </div>
             @auth

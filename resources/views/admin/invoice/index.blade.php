@@ -88,7 +88,7 @@
 
                                             </td>
                                         @empty
-                                            <td colspan="6" class="mt-4">
+                                            <td colspan="11" class="mt-4">
                                                 <div class="alert alert-warning text-center" role="alert">
                                                     <h5>
                                                         Tidak ada data .

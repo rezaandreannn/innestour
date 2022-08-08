@@ -18,8 +18,9 @@ class CreateNegosiasisTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('paket_id');
             $table->string('harga');
-            $table->string('status')
+            $table->enum('status', ['pending', 'acc', 'tolak'])
                 ->default('pending');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
 
 

@@ -35,31 +35,36 @@
 
                 </div>
                 <div class="col-md-8 order-md-1">
-                    {{-- <h4 class="mb-3">
-                        @if (Auth::user()->jenis_kelamin == 'laki-laki')
-                            Bapak.
-                        @elseif(Auth::user()->jenis_kelamin == 'perempuan')
-                            Ibu.
-                        @else
-                            Bapak/ibu.
-                        @endif
-                        {{ Auth::user()->name }}
-                    </h4> --}}
+
+                    @if (session('message'))
+                        <div class="alert alert-primary text-center" role="alert">
+                            <span>
+                                {{ session('message') }}
+                            </span>
+                        </div>
+                    @else
+                        <div class="alert alert-warning" role="alert">
+                            <span>Harga/<span class="text-muted">orang</span></span>
+                            <strong>@currency($paket->harga)</strong>
+                            <hr>
+                            <p>anda bisa melakukan penawaran hanya <strong class="text-danger">5%</strong> dari harga
+                                yang
+                                kami tentukan. <br>
+                                Mohon masukan nominal yang sesuai 👌</p>
+                        </div>
+                    @endif
+
+
+
                     <form method="post" action="{{ route('negosiasi.store') }}">
                         @csrf
                         <input type="hidden" name="paket_id" value="{{ $paket->id }}">
-                        <h4 class="mb-3">Pilih Harga</h4>
                         <div class="form-group row mb-4">
                             <x-label for="harga" class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
                                 :value="__('Harga')" />
                             <div class="col-sm-12 col-md-7">
-                                <select class="form-control" id="harga" name="harga">
-                                    <option value="" selected>Pilihan</option>
-                                    @foreach ($hargas as $key => $harga)
-                                        <option value="{{ $harga }}">@currency($harga)</option>
-                                    @endforeach
-
-                                </select>
+                                <input type="text" class="form-control" id="harga" name="harga"
+                                    placeholder="{{ $paket->harga - 2000 }}">
                                 @error('harga')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

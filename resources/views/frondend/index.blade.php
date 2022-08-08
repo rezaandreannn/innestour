@@ -143,8 +143,22 @@
                                     <li>{!! $paket->wisata !!}</li>
                                 </ul>
                                 @if ($mous_user_id)
+                                    {{-- @php
+                                        $neg = App\Models\Negosiasi::where([
+                                            'user_id' => Auth::user()->id,
+                                            'paket_id' => $paket,
+                                        ])->first();
+                                        
+                                        if ($neg) {
+                                            return redirect()
+                                                ->back()
+                                                ->with('message', 'Anda sudah melakukan penawaran pada paket ini.');
+                                        }
+                                    @endphp --}}
                                     <a href="{{ route('negosiasi.create', $paket->id) }}"
                                         class="btn btn-lg btn-success">Tawar</a>
+                                    {{-- @if ($neg)
+                                    @endif --}}
                                 @endif
                                 <a href="{{ route('invoice.detail', $paket->id) }}" class="btn btn-lg btn-primary"
                                     style="background-color: #6777ef">Pesan

@@ -44,7 +44,6 @@
             <!-- Main Content -->
             <div class="main-content">
                 {{ $slot }}
-
             </div>
             <footer class="main-footer">
                 <div class="footer-left">

@@ -35,7 +35,7 @@
 
                 </div>
                 <div class="col-md-8 order-md-1">
-                    <h4 class="mb-3">{{ Auth::user()->name }}</h4>
+                    {{-- <h4 class="mb-3">{{ Auth::user()->name }}</h4> --}}
                     <form method="post" action="{{ route('invoice.store') }}">
                         @csrf
                         <input type="hidden" name="paket_id" value="{{ $paket->id }}">

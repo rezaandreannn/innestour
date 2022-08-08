@@ -44,7 +44,7 @@ class InvoiceController extends Controller
             ];
 
             $invoices = Invoice::orderBy('created_at', 'desc')
-                ->where('kode', 'like', "%" . $cari . "%")->paginate(3)->withQueryString();
+                ->where('kode', 'like', "%" . $cari . "%")->paginate(10)->withQueryString();
 
             return view('admin.invoice.index', compact('invoices', 'theads', 'breadcrumbs'));
         }
