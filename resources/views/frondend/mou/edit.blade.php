@@ -1,4 +1,4 @@
-<x-frondend-layout title="Tambah Mou">
+<x-frondend-layout title="Edit Mou">
     <div class="container-xxl py-5">
         <div class="container">
             <section class="section">
@@ -13,14 +13,15 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <form action="{{ route('mou.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('mou.update', $mou->id) }}" method="post" enctype="multipart/form-data">
+                            @method('PATCH')
                             @csrf
                             <div class="form-group row mb-4">
                                 <x-label for="nama_perusahaan"
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" :value="__('Nama Perusahaan')" />
                                 <div class="col-sm-12 col-md-7">
                                     <input type="text" name="nama_perusahaan" class="form-control"
-                                        value="{{ old('nama_perusahaan') }}" placeholder="UM Metro">
+                                        value="{{ $mou->nama_perusahaan }}" placeholder="UM Metro">
                                     @error('nama_perusahaan')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -31,7 +32,7 @@
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" :value="__('Email Perusahaan')" />
                                 <div class="col-sm-12 col-md-7">
                                     <input type="text" name="email_perusahaan" class="form-control"
-                                        value="{{ old('email_perusahaan') }}" placeholder="ummetro@example.com">
+                                        value="{{ $mou->email_perusahaan }}" placeholder="ummetro@example.com">
                                     @error('email_perusahaan')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -42,7 +43,7 @@
                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3" :value="__('No hp Perusahaan')" />
                                 <div class="col-sm-12 col-md-7">
                                     <input type="text" name="no_hp_perusahaan" class="form-control"
-                                        value="{{ old('no_hp_perusahaan') }}" placeholder="08217694378">
+                                        value="{{ $mou->no_hp_perusahaan }}" placeholder="08217694378">
                                     @error('no_hp_perusahaan')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

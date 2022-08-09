@@ -132,7 +132,7 @@ class MouController extends Controller
      */
     public function edit(Mou $mou)
     {
-        //
+        return view('frondend.mou.edit', compact('mou'));
     }
 
     /**
@@ -144,7 +144,32 @@ class MouController extends Controller
      */
     public function update(Request $request, Mou $mou)
     {
-        //
+        $data = $request->validate([
+            'user_id' => '',
+            'logo' => 'image|file|max:1024',
+            'nama_perusahaan' => 'required',
+            'email_perusahaan' => ['required', 'string', 'email', 'max:255'],
+            'no_hp_perusahaan' => 'required|numeric',
+            'dokumen' => 'mimes:pdf|max:1024'
+        ]);
+
+        if ($request->file('logo')) {
+            $data['logo'] = $request->file('logo')->store('mou/logo');
+        }
+
+        if (!$request->file('dokumen')) {
+            $data['dokumen'] = $mou->dokumen;
+        } else {
+
+            // $data['user_id'] = Auth::user()->id;
+            $data['dokumen'] = $request->file('dokumen')->store('mou/dokumen');
+        }
+
+
+        Mou::where('id', $mou->id)
+            ->update($data);
+
+        return redirect()->route('mou.index')->with('message', 'Berhasil mengubah data Mou');
     }
 
     /**
