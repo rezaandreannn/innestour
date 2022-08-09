@@ -35,13 +35,13 @@
 
                 <x-input id="password" class="" type="password" name="password" required
                     autocomplete="current-password" />
-                <div class="float-right">
+                {{-- <div class="float-right">
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}" class="text-small">
                             Lupa Password?
                         </a>
                     @endif
-                </div>
+                </div> --}}
             </div>
 
             <!-- Remember Me -->

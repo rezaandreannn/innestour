@@ -147,7 +147,7 @@
                     class="nav-item nav-link {{ Request::is('tentang-kami') ? 'active' : '' }}">Tentang kami</a>
                 <a href="{{ route('service.index') }}"
                     class="nav-item nav-link {{ Request::is('layanan-kami') ? 'active' : '' }}">Layanan</a>
-                <a href="{{ route('contact.index') }}"
+                <a href="{{ route('contact.create') }}"
                     class="nav-item nav-link {{ Request::is('kontak-kami') ? 'active' : '' }}">Kontak kami</a>
                 @auth
                     <div class="nav-item dropdown">
@@ -228,7 +228,7 @@
                         class="btn btn-link {{ Request::is('tentang-kami') ? 'active' : '' }}">Tentang kami</a>
                     <a href="{{ route('service.index') }}"
                         class="btn btn-link {{ Request::is('layanan-kami') ? 'active' : '' }}">Layanan</a>
-                    <a href="{{ route('contact.index') }}"
+                    <a href="{{ route('contact.create') }}"
                         class="btn btn-link {{ Request::is('kontak-kami') ? 'active' : '' }}">Kontak kami</a>
                 </div>
                 <div class="col-lg-3 col-md-6">

@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MouController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\WisataController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NegosiasiController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Frondend\HomeController;
 use App\Http\Controllers\Frondend\AboutController;
-use App\Http\Controllers\Frondend\ContactController;
 use App\Http\Controllers\Frondend\ServiceController;
 
 /*
@@ -31,13 +31,12 @@ use App\Http\Controllers\Frondend\ServiceController;
 // frondend
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/tentang-kami', AboutController::class)->name('about.index');
-Route::get('/kontak-kami', ContactController::class)->name('contact.index');
+Route::get('/kontak-kami', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/layanan-kami', ServiceController::class)->name('service.index');
 // frondend
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+
 
 
 Route::middleware('auth', 'ceklogin:admin')->group(function () {
@@ -56,6 +55,7 @@ Route::middleware('auth', 'ceklogin:admin')->group(function () {
 });
 
 Route::middleware('auth', 'ceklogin:user,admin')->group(function () {
+    Route::Resource('contact', 'App\Http\Controllers\ContactController')->except(['create', 'store']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('mou/balasan', [MouController::class, 'balasan'])->name('mou.balasan');
     Route::get('invoice', [InvoiceController::class, 'index'])->name('invoice.index');

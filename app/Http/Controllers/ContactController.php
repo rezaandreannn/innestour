@@ -14,7 +14,14 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $breadcrumbs = [
+            'Dashboard' => route('dashboard.index')
+
+        ];
+        $theads = ['No', 'Nama', 'Email', 'Subyek', 'Pesan'];
+        $contacts = Contact::orderBy('id', 'desc')->paginate(10);
+
+        return view('admin.contact', compact('contacts', 'theads', 'breadcrumbs'));
     }
 
     /**
@@ -24,7 +31,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        return view('frondend.contact');
     }
 
     /**
@@ -35,7 +42,16 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required',
+            'email' => 'required|string|unique:contacts',
+            'subyek' => 'required',
+            'pesan' => 'required',
+        ]);
+
+        Contact::create($data);
+
+        return redirect()->back()->with('message', 'berhasil mengirimkan pesan');
     }
 
     /**
